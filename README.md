@@ -30,11 +30,14 @@ For any non-trivial feature or issue, the pipeline is:
 Around the pipeline: **doubt-driven-development** *(fork)* for in-flight second
 opinions, **review** for on-demand leveled reviews, **plan-walkthrough** /
 **pr-walkthrough** to review documents/PRs above the code level with the human
-in the loop, **issue-triage** as the issue radar, **git-guardrails-claude-code**
-as the destructive-git safety net, **handoff** *(fork)* to pass work
-between sessions, **catch-me-up** / **drink-from-the-firehose** to re-enter a
-project cold. Craft references: **navigating-java** (symbol-level Java
-navigation), **slides** (fully-local reveal.js decks).
+in the loop — each leaves a **visual dossier** (Mermaid diagrams: before/after
+architecture, impact map, phase graph, traceability, assumptions) so impacts
+and risks are *seen*, not imagined, **issue-triage** as the issue radar,
+**git-guardrails-claude-code** as the destructive-git safety net, **handoff**
+*(fork)* to pass work between sessions, **catch-me-up** /
+**drink-from-the-firehose** to re-enter a project cold. Craft references:
+**navigating-java** (symbol-level Java navigation), **slides** (fully-local
+reveal.js decks).
 
 ### Running a project with it
 
@@ -54,8 +57,8 @@ project life — and `scripts/wire-machine.sh` automates the wiring.
 | adversarial-code-review | pre-merge adversarial review: fresh-context reviewers + reproducibility gate |
 | review | quick leveled review of a diff/branch/PR on demand |
 | writing-prds | phased PRD with falsifiable acceptance criteria, decomposed into tasks |
-| plan-walkthrough | logical review of PRDs/plans/design docs, human in the loop |
-| pr-walkthrough | logical review of a PR above the code level |
+| plan-walkthrough | logical review of PRDs/plans/design docs as a visual dossier (Mermaid phase graph, traceability matrix, assumption map), human in the loop |
+| pr-walkthrough | logical review of a PR above the code level: Mermaid before/after map + impact map, blast radius at a glance |
 | issue-triage | periodic GitHub-issue sweep with rolling state |
 | navigating-java | structural Java navigation (symbols before grep) |
 | slides | presentation as markdown + vendored reveal.js deck |

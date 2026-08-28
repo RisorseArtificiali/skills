@@ -87,6 +87,21 @@ flowchart TD
     ACR -. "review above the code level" .- PRW["pr-walkthrough"]
 ```
 
+### Read the map, then judge
+
+The two walkthrough gates do not just return a verdict — they leave
+behind a **dossier** in `.reviews/` whose core is visual: Mermaid
+diagrams of what changed and what it touches (before/after architecture,
+impact map, phase graph, traceability matrix, assumption map), plus a
+traffic light per review dimension. This matters twice over.
+
+Past hello-world size, impacts and risks are invisible in a raw diff or a
+long document — a drawn map makes them visible, so your gate decision is
+informed instead of hopeful. And AI makes production so fast that the
+volume of PRs and documents grows beyond any line-by-line reading: at
+that pace, judging the map first and zooming only where the traffic light
+is yellow or red is the only review that scales.
+
 ### The daily rhythm
 
 - **Back after a few days?** `/catch-me-up` — what happened while you were

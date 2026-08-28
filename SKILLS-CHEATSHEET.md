@@ -22,8 +22,8 @@ rows seem to fit, the "two-second rules" at the bottom break the tie.
 | "I am not sure about this decision we just made" | `doubt-driven-development` |
 | "Give this diff a quick look" | `review` (fast second opinion, mid-work) |
 | "This is about to merge, or it touches something risky" | `adversarial-code-review` |
-| "Help me understand / review this big PR" | `pr-walkthrough` |
-| "Is this document (PRD, plan, design, issue) any good?" | `plan-walkthrough` |
+| "Help me understand / review this big PR" | `pr-walkthrough` — Mermaid map of the change; blast radius and risks at a glance |
+| "Is this document (PRD, plan, design, issue) any good?" | `plan-walkthrough` — visual dossier: phase graph, traceability matrix, assumption map |
 | "This test fails / this broke / it got slow" | `systematic-debugging`, `diagnosing-bugs` |
 | "Where is this in the Java code? Who calls it?" | `navigating-java` — before any grep |
 | "This design area feels tangled" | `codebase-design` |
@@ -68,6 +68,9 @@ rows seem to fit, the "two-second rules" at the bottom break the tie.
   `review` is the everyday tool; the gate is the gate.
 - **Document or code?** Document → `plan-walkthrough`. Code → `review` /
   `pr-walkthrough` (above the code level) — never line-level nitpicks at a gate.
+- **Facing a big PR or a long document?** Start from the walkthrough's
+  visual map (Mermaid): impacts and risks first, zoom after. At AI speed,
+  the map is the only part of review that scales.
 - **Decision not yet made?** → `doubt-driven-development`. Decision made and
   built? → the review family.
 - **How fuzzy is the idea?** Fuzzy → `brainstorming`. Clear idea, contested
