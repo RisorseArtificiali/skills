@@ -55,7 +55,10 @@ The agents themselves run in [**Lince**](https://lince.sh)
 every coding agent lives in an isolated sandbox, so even full permissions
 cannot damage the machine, and the dashboard drives several agents in
 parallel — each on its own task, in its own worktree. Our steady state is
-about five agents at a time, across one or two projects.
+about five agents at a time, across one or two projects. Typing is
+optional: voice input via [**VoxCode**](https://github.com/RisorseArtificiali/voxcode)
+(Whisper transcription, fully local — no audio leaves the machine) is how
+long context gets from your head into the agent.
 
 ## Own skills (`skills/`)
 
@@ -122,6 +125,9 @@ Three MCP servers complete the setup — none required by the skills, all worth 
 - [**Lince**](https://lince.sh) — sandbox + dashboard + hooks: the
   multi-agent workstation this toolkit runs in
   ([RisorseArtificiali/lince](https://github.com/RisorseArtificiali/lince)).
+- [**VoxCode**](https://github.com/RisorseArtificiali/voxcode) — voice input
+  for coding agents: local Whisper transcription, no audio leaves the
+  machine; installs with Lince.
 - [**RisorseArtificiali**](https://risorseartificiali.com) — the organization
   behind Lince and this skill set.
 - [**maeste.it**](https://maeste.it) — Stefano Maestri's site.
