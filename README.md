@@ -36,6 +36,14 @@ between sessions, **catch-me-up** / **drink-from-the-firehose** to re-enter a
 project cold. Craft references: **navigating-java** (symbol-level Java
 navigation), **slides** (fully-local reveal.js decks).
 
+### Running a project with it
+
+The catalog above says what exists and how to install it.
+[**WORKFLOW.md**](WORKFLOW.md) says how to use it, for the human driving
+the agents: the pyramid of roles (who directs, who executes, and why the
+strongest model plans), the gates where a human decides, the daily rhythm,
+where knowledge lives, and how to wire a new machine or project.
+
 ## Own skills (`skills/`)
 
 | Skill | What it does |

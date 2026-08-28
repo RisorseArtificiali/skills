@@ -1,0 +1,133 @@
+# WORKFLOW — Running a project with this toolkit
+
+This page is for the human who drives agents equipped with these skills,
+MCP servers and tools. The [README](README.md) is the catalog: what exists
+and how to install it. This page is the practice: how you run a project
+with it, day after day.
+
+## The shape of the team: a pyramid, never inverted
+
+Three roles share the work:
+
+- **You** — you decide at the gates. You approve designs and PRDs, you
+  judge at the review gates, you merge. Everything that cannot be undone
+  cheaply is yours.
+- **The thinking tier** — turns an idea into an approved design, a PRD,
+  implementation plans, and the final review before a merge.
+- **The execution tier** — implements task by task, runs the routine
+  checks, keeps the radar on the issues.
+
+**Roles, not headcount.** You can run the whole pipeline with a single
+capable agent filling both agent roles, or split them across a strong
+planner and a cheaper worker. Both are fine. What matters is the shape:
+
+> **Whoever directs must be at least as capable as whoever is directed —
+> never the other way round.**
+
+Direction means planning, reviewing, and deciding what happens next. So:
+
+- PRDs and implementation plans come from your **strongest** model. An
+  executor that writes its own plan is where quality collapses — never
+  let the working tier plan for itself.
+- Execution and mechanical work can go to a cheaper or older model, inside
+  the plan's guardrails.
+- Review crosses the boundary: the work of one tier is judged by the other
+  tier (or by fresh-context reviewer subagents, which is how the review
+  skills work anyway), and you hold the final word.
+
+On older or smaller models, the prescriptive skills and a second opinion
+from a different model are not optional extras — they **are** the
+guardrail. A model two generations behind still does solid work inside
+this pipeline, because the skills decide the process and the gates catch
+the drift. Expect more fix-loop rounds, not more defects escaping.
+
+## The pipeline, and where you sit
+
+The six stages and their skills are in the
+[README](README.md#the-workflow). Here is what matters to you: **the
+pipeline is built to interrupt you only where a human should decide.**
+
+| Gate | When | Your decision |
+|---|---|---|
+| Shared understanding | after brainstorming/grilling | confirm, or keep answering |
+| PRD approval | before any task exists | approve the document, or send it back |
+| Plan review | `plan-walkthrough` | judge the PRD/plan before it becomes tasks |
+| Deviation reports | during execution | answer the smallest unblocking question — only when reality diverges from the plan |
+| Pre-merge review | `adversarial-code-review` | read the verdict (BLOCK / FIX-THEN-MERGE / SHIP) and decide |
+| Merge | end of every branch | yours, explicit, in the moment — agreement on a plan is **not** merge approval |
+
+Between gates you are not needed. That is the point: the skills carry the
+process so that your attention is spent only on decisions.
+
+### The daily rhythm
+
+- **Back after a few days?** `/catch-me-up` — what happened while you were
+  away, with your own open work listed first.
+- **Someone new on the project** (a human, not an agent)? `/drink-from-the-firehose`
+  — a role-aware, quiz-driven onboarding where every claim carries its source.
+- **Routine**: `/issue-triage` as the radar — what is new, what changed,
+  what needs you.
+- **Closing the session?** `handoff` — the next session picks up from a
+  document, not from your memory.
+- **Doubt about a decision while work is in flight?** `doubt-driven-development`
+  — a fresh-context second opinion before the decision hardens into code.
+
+## Scale down inside a stage — never skip the stage
+
+"Do not skip a stage because the task looks simple" is the rule that
+fails most often in practice, and the one that costs most. Every stage
+has a light path:
+
+- a small idea gets a **short design** — two sentences in chat, then your
+  approval;
+- a feasibility question is a **spike**: the output is an answer, not kept
+  code;
+- a small, well-scoped change to existing code gets a **short in-chat
+  design** instead of a spec;
+- a small diff gets review's **fast path** — one reviewer, one verifier.
+
+What never scales down is the approval gate. "Simple" tasks are where
+unexamined assumptions cause the most wasted work.
+
+## Where knowledge lives
+
+- **Markdown is the only source of truth.** PRDs, specs, plans, review
+  dossiers, lessons — all plain files in the repo. Anything derived
+  (search indexes, embeddings, caches) is rebuildable and never
+  authoritative: you fix the markdown, then rebuild the index. Never the
+  other way round.
+- **Review and handoff artifacts live in `.reviews/`** (`prs/`, `plans/`,
+  `handoffs/`) — excluded per machine via `.git/info/exclude`, never
+  listed in `.gitignore`. They stay out of the shared repo but survive
+  like repo files, unlike a temp directory that any reboot can wipe.
+- **Durable corrections become lessons.** When a human gives a correction
+  that should outlive the session (a convention, a hard-won lesson), it is
+  recorded as a note — one fact per note, terse — that future sessions
+  inherit. This is the free substitute for persistent agent memory.
+- **Handoffs connect sessions.** The outgoing session writes the document;
+  the incoming one reads it, moves it to `done/`, and continues.
+- **Optional: a local search index** (e.g. qmd) over the markdown silos so
+  agents can retrieve across docs, reviews and lessons in one query.
+  Index, not store: the index is derived, disposable, and rebuilt — the
+  markdown stays the truth.
+
+## Wiring a new machine or project
+
+- **Skills at user level.** Install into your harness's user-level skills
+  directory (e.g. `~/.claude/skills/`) so every agent on the box sees
+  them natively — no per-project copies to sync.
+- **MCP registrations in the repo, workspace-scoped.** The project's
+  `.mcp.json` (and your other agents' equivalents) travels with the repo.
+  Global configs under `$HOME` are the first thing to evaporate on reboot,
+  reinstall or sandbox reset — the repo is the only persistent home for
+  machine wiring. Self-healing trick: start servers with an explicit
+  project flag so they re-activate on every boot.
+- **Machine-specific truths in an untracked notes file.** Keep an
+  `AGENTS.local.md` (referenced from `AGENTS.md`, never committed) for
+  what is true only on this box: read-only paths, missing toolchains,
+  credential routing, known traps. The agent reads it once instead of
+  rediscovering it expensively. Worktrees do not inherit untracked files —
+  symlink it.
+- **New repo, same ritual.** When an agent starts working on another
+  repository, replicate there: the pipeline section of your agents file,
+  the workspace-scoped MCP registrations, and the local notes file.
