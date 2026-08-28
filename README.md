@@ -86,6 +86,16 @@ npx skills add <owner>/<repo> -g -y --agent <your-agent> --skill <skill-name>
 npx skills add maeste/skills -g -y --agent <your-agent> --skill review
 ```
 
+## Companion MCP servers
+
+Three MCP servers complete the setup — none required by the skills, all worth citing:
+
+| Server | Repo | Role in the workflow |
+|---|---|---|
+| Serena | https://github.com/oraios/serena | semantic code retrieval and editing — the backend `navigating-java` drives for symbol-level navigation |
+| Backlog.md | https://github.com/MrLesk/Backlog.md | human/agent project collaboration in git — where the `writing-prds` task decomposition lands |
+| qmd | https://github.com/tobi/qmd | local mini search engine over markdown — indexes the docs, plans and reviews the pipeline produces |
+
 ## License
 
 MIT — see [`LICENSE`](LICENSE). `forked/` derives from MIT-licensed upstream
