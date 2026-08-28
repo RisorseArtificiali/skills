@@ -87,6 +87,21 @@ flowchart TD
     ACR -. "review above the code level" .- PRW["pr-walkthrough"]
 ```
 
+### Read the map, then judge
+
+The two walkthrough gates do not just return a verdict — they leave
+behind a **dossier** in `.reviews/` whose core is visual: Mermaid
+diagrams of what changed and what it touches (before/after architecture,
+impact map, phase graph, traceability matrix, assumption map), plus a
+traffic light per review dimension. This matters twice over.
+
+Past hello-world size, impacts and risks are invisible in a raw diff or a
+long document — a drawn map makes them visible, so your gate decision is
+informed instead of hopeful. And AI makes production so fast that the
+volume of PRs and documents grows beyond any line-by-line reading: at
+that pace, judging the map first and zooming only where the traffic light
+is yellow or red is the only review that scales.
+
 ### The daily rhythm
 
 - **Back after a few days?** `/catch-me-up` — what happened while you were
@@ -116,6 +131,27 @@ has a light path:
 
 What never scales down is the approval gate. "Simple" tasks are where
 unexamined assumptions cause the most wasted work.
+
+## Parallel by default, sandboxed always
+
+One agent in one terminal is the slow way. The toolkit is built to run in
+parallel: several agents work at the same time on different tasks, each in
+its own git worktree (the `using-git-worktrees` skill sets that up), so
+branches never step on each other. A practical steady state is about five
+agents at once, spread over one or two projects — enough parallelism to
+keep every gate busy, few enough to actually review what comes back.
+
+Parallel work at full permissions needs a hard safety floor: every agent
+runs inside an isolated sandbox — [**Lince**](https://lince.sh)
+([RisorseArtificiali/lince](https://github.com/RisorseArtificiali/lince)),
+so even an agent with every permission granted cannot damage the machine
+or anything outside its box. The Lince dashboard is the control room:
+live status, token usage, one swimlane per project — five parallel tasks
+stay legible at a glance.
+
+The review gates matter more, not less, when five agents produce at once.
+Each branch still goes through the same pipeline — and the walkthrough
+maps are how one reviewer keeps track of several parallel streams.
 
 ## Where knowledge lives
 

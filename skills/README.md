@@ -65,26 +65,36 @@ does not invent nitpicks to justify the run.
 ### plan-walkthrough
 
 A logical review of a *document* — a PRD, an implementation plan, a design
-doc, a GitHub issue — with you in the loop. It builds a visual dossier
-(phase graph, traceability matrix, assumption map), then walks you through
-the document step by step with closed questions, and triages the findings
-with you.
+doc, a GitHub issue — with you in the loop. It opens a **visual dossier**:
+a Mermaid phase-and-dependency graph (with a warning on every phase that
+fails the "would we still merge what came before?" test), a traceability
+matrix from requirements to acceptance criteria, and an assumption map
+where every claim about the codebase is marked verified, unverified, or
+false. Then it walks you through the document step by step with closed
+questions, and triages the findings with you.
 
 **What you get:** the holes in a plan surface before anyone builds it —
 unclear goals, missing acceptance criteria, assumptions that do not hold
 against the real codebase. Fixing a plan costs minutes; fixing the code
-built from it costs days.
+built from it costs days. And the judgment is visual: you see the missing
+coverage and the false assumptions in a diagram, not buried in prose.
 
 ### pr-walkthrough
 
-The same idea for a pull request or branch. It produces a map of what
-changed, then walks you through the PR above the code level: architecture,
-impacts and dependencies, user experience, operations, documentation, and
-the test story.
+The same idea for a pull request or branch. It produces a **visual
+dossier**: a Mermaid before/after map of the architecture (only the
+touched part), an impact map that radiates from the change to every
+affected surface — the blast radius at a glance — and a seven-dimension
+traffic light: intent, architecture, impacts, user experience, operations,
+docs, tests. Then it walks you through the PR above the code level.
 
 **What you get:** you can actually review a PR that is too large or too
 unfamiliar to grasp from the diff alone — as a reviewer, or before your
-own merge.
+own merge. Past hello-world size, impacts and risks are invisible in a
+raw diff; here they are drawn. And when AI makes the pace of change so
+fast that PR volume grows beyond any line-by-line reading, the map is
+what keeps review possible: see where the risk sits first, then zoom only
+where it matters.
 
 ## Navigate the code
 

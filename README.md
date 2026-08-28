@@ -30,11 +30,14 @@ For any non-trivial feature or issue, the pipeline is:
 Around the pipeline: **doubt-driven-development** *(fork)* for in-flight second
 opinions, **review** for on-demand leveled reviews, **plan-walkthrough** /
 **pr-walkthrough** to review documents/PRs above the code level with the human
-in the loop, **issue-triage** as the issue radar, **git-guardrails-claude-code**
-as the destructive-git safety net, **handoff** *(fork)* to pass work
-between sessions, **catch-me-up** / **drink-from-the-firehose** to re-enter a
-project cold. Craft references: **navigating-java** (symbol-level Java
-navigation), **slides** (fully-local reveal.js decks).
+in the loop — each leaves a **visual dossier** (Mermaid diagrams: before/after
+architecture, impact map, phase graph, traceability, assumptions) so impacts
+and risks are *seen*, not imagined, **issue-triage** as the issue radar,
+**git-guardrails-claude-code** as the destructive-git safety net, **handoff**
+*(fork)* to pass work between sessions, **catch-me-up** /
+**drink-from-the-firehose** to re-enter a project cold. Craft references:
+**navigating-java** (symbol-level Java navigation), **slides** (fully-local
+reveal.js decks).
 
 ### Running a project with it
 
@@ -47,6 +50,13 @@ where knowledge lives, and how to wire a new machine or project.
 to "which skill right now?" — in the pipeline and in every other moment of
 project life — and `scripts/wire-machine.sh` automates the wiring.
 
+The agents themselves run in [**Lince**](https://lince.sh)
+([RisorseArtificiali/lince](https://github.com/RisorseArtificiali/lince)):
+every coding agent lives in an isolated sandbox, so even full permissions
+cannot damage the machine, and the dashboard drives several agents in
+parallel — each on its own task, in its own worktree. Our steady state is
+about five agents at a time, across one or two projects.
+
 ## Own skills (`skills/`)
 
 | Skill | What it does |
@@ -54,8 +64,8 @@ project life — and `scripts/wire-machine.sh` automates the wiring.
 | adversarial-code-review | pre-merge adversarial review: fresh-context reviewers + reproducibility gate |
 | review | quick leveled review of a diff/branch/PR on demand |
 | writing-prds | phased PRD with falsifiable acceptance criteria, decomposed into tasks |
-| plan-walkthrough | logical review of PRDs/plans/design docs, human in the loop |
-| pr-walkthrough | logical review of a PR above the code level |
+| plan-walkthrough | logical review of PRDs/plans/design docs as a visual dossier (Mermaid phase graph, traceability matrix, assumption map), human in the loop |
+| pr-walkthrough | logical review of a PR above the code level: Mermaid before/after map + impact map, blast radius at a glance |
 | issue-triage | periodic GitHub-issue sweep with rolling state |
 | navigating-java | structural Java navigation (symbols before grep) |
 | slides | presentation as markdown + vendored reveal.js deck |
@@ -106,6 +116,15 @@ Three MCP servers complete the setup — none required by the skills, all worth 
 | Serena | https://github.com/oraios/serena | semantic code retrieval and editing — the backend `navigating-java` drives for symbol-level navigation |
 | Backlog.md | https://github.com/MrLesk/Backlog.md | human/agent project collaboration in git — where the `writing-prds` task decomposition lands |
 | qmd | https://github.com/tobi/qmd | local mini search engine over markdown — indexes the docs, plans and reviews the pipeline produces |
+
+## Also from us
+
+- [**Lince**](https://lince.sh) — sandbox + dashboard + hooks: the
+  multi-agent workstation this toolkit runs in
+  ([RisorseArtificiali/lince](https://github.com/RisorseArtificiali/lince)).
+- [**RisorseArtificiali**](https://risorseartificiali.com) — the organization
+  behind Lince and this skill set.
+- [**maeste.it**](https://maeste.it) — Stefano Maestri's site.
 
 ## License
 
