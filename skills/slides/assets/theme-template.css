@@ -1,0 +1,120 @@
+/* Deck theme template — ADAPT before use (see SKILL.md "The theme: adapt, don't copy").
+ * Mechanics to keep: tokens on :root, dark via prefers-color-scheme, components styled
+ * through tokens only. Palette and category families are PLACEHOLDERS: derive them from
+ * the subject, or drop the families and keep one accent. */
+
+:root {
+  --ground: #F3F4F6; --surface: #FFFFFF; --ink: #1B222A; --dim: #5A6572;
+  --line: #D8DDE3; --code-bg: #EDF0F3;
+  /* Semantic category families (use only if the subject has 2–3 recurring categories): */
+  --cat-a: #B45E14; --cat-a-bg: #F7E8D8;
+  --cat-b: #3D6E9E; --cat-b-bg: #E2ECF5;
+  --cat-c: #8A4D8F; --cat-c-bg: #F0E4F1;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ground: #10151B; --surface: #171E26; --ink: #E7ECF1; --dim: #93A0AC;
+    --line: #2A3441; --code-bg: #0C1116;
+    --cat-a: #E08A3C; --cat-a-bg: #33240F;
+    --cat-b: #6FA3D3; --cat-b-bg: #14283A;
+    --cat-c: #C583C9; --cat-c-bg: #331F35;
+  }
+}
+
+.reveal-viewport { background: var(--ground); }
+.reveal {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 26px; color: var(--ink);
+}
+.reveal .slides section { text-align: left; line-height: 1.5; }
+.reveal h1, .reveal h2 {
+  /* Display face: serif = technical-report voice; swap to fit the subject. */
+  font-family: Charter, "Iowan Old Style", Georgia, "Times New Roman", serif;
+  color: var(--ink); text-transform: none; letter-spacing: normal;
+  line-height: 1.15; font-weight: 600; margin-bottom: 0.5em; text-wrap: balance;
+}
+.reveal h1 { font-size: 2.6em; }
+.reveal h2 { font-size: 1.55em; }
+.reveal p { margin: 0.5em 0; }
+.reveal a { color: var(--cat-b); }
+.reveal strong { color: var(--ink); }
+
+.eyebrow {
+  font-size: 0.62em; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--dim); margin-bottom: 0.5em;
+}
+.thesis {
+  font-family: Charter, "Iowan Old Style", Georgia, serif;
+  font-size: 1.35em; line-height: 1.35; margin: 1em 0;
+}
+.thesis strong { border-bottom: 3px solid var(--cat-a); }
+.lede { font-size: 0.95em; }
+.dimtext { color: var(--dim); }
+.small { font-size: 0.78em; }
+
+/* Code/data blocks (class "j" = the deck's monospace exhibit block) */
+.reveal pre.j {
+  background: var(--code-bg); border: 1px solid var(--line); border-radius: 6px;
+  padding: 0.6em 0.8em; overflow-x: auto; width: 100%;
+  font-size: 0.52em; line-height: 1.5; margin: 0.5em 0; box-shadow: none;
+  font-family: ui-monospace, "Cascadia Code", "JetBrains Mono", Menlo, Consolas, monospace;
+  white-space: pre;
+}
+.reveal pre.j .k  { color: var(--dim); }           /* annotation/comment */
+.reveal pre.j .kd { font-weight: 700; }             /* emphasized key */
+.reveal pre.j .ca { color: var(--cat-a); font-weight: 700; }
+.reveal pre.j .cb { color: var(--cat-b); font-weight: 700; }
+.reveal pre.j .cc { color: var(--cat-c); font-weight: 700; }
+.reveal code {
+  font-family: ui-monospace, "Cascadia Code", Menlo, Consolas, monospace;
+  font-size: 0.82em; background: var(--code-bg); border-radius: 4px; padding: 0.05em 0.3em;
+  color: var(--ink);
+}
+
+/* Category chips */
+.pill {
+  display: inline-block; border-radius: 3px; padding: 0.02em 0.45em; font-size: 0.72em;
+  font-family: ui-monospace, Menlo, Consolas, monospace; font-weight: 600; white-space: nowrap;
+}
+.pill.ca { background: var(--cat-a-bg); color: var(--cat-a); }
+.pill.cb { background: var(--cat-b-bg); color: var(--cat-b); }
+.pill.cc { background: var(--cat-c-bg); color: var(--cat-c); }
+
+/* Tables */
+.reveal table { border-collapse: collapse; margin: 0.6em 0; font-size: 0.72em; }
+.reveal th, .reveal td {
+  text-align: left; padding: 0.35em 0.9em 0.35em 0;
+  border-bottom: 1px solid var(--line); vertical-align: top; border-top: none;
+}
+.reveal th {
+  font-size: 0.8em; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--dim); font-weight: 600;
+}
+.tablewrap { overflow-x: auto; width: 100%; }
+
+/* Hand-built box-and-arrow diagrams (no external diagram libs) */
+.diagram { display: flex; align-items: center; gap: 0.7em; flex-wrap: wrap; margin: 0.9em 0; font-size: 0.8em; }
+.dbox {
+  border: 1.5px solid var(--line); background: var(--surface); border-radius: 6px;
+  padding: 0.45em 0.8em; text-align: center; line-height: 1.3;
+}
+.dbox b { display: block; }
+.dbox.hero { border-color: var(--cat-a); border-width: 2.5px; font-weight: 600; }
+.darrow { color: var(--dim); white-space: nowrap; font-size: 0.9em; }
+.dlabel { font-size: 0.68em; color: var(--dim); display: block; text-align: center; }
+.dstack { display: flex; flex-direction: column; gap: 0.4em; }
+
+/* Monospace tree/figure block */
+.tree {
+  font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.62em;
+  background: var(--code-bg); border: 1px solid var(--line); border-radius: 6px;
+  padding: 0.7em 1em; overflow-x: auto; white-space: pre; line-height: 1.7; margin: 0.6em 0;
+}
+
+.cols { display: flex; gap: 1.5em; align-items: flex-start; }
+.col { flex: 1 1 0; min-width: 0; }
+
+/* Reveal chrome on the token palette */
+.reveal .controls { color: var(--dim); }
+.reveal .progress { background: var(--line); color: var(--cat-a); height: 4px; }
+.reveal .slide-number { background: transparent; color: var(--dim); font-size: 16px; }

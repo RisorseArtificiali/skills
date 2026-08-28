@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DECK TITLE</title>
+  <link rel="stylesheet" href="reveal/reset.css">
+  <link rel="stylesheet" href="reveal/reveal.css">
+  <link rel="stylesheet" href="theme.css">
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- 1 · TITLE — one thesis line, not an agenda -->
+<section>
+  <div class="eyebrow">CONTEXT · audience</div>
+  <h1>Deck Title</h1>
+  <p class="thesis">The one-sentence thesis of the talk,<br><strong>with its sharpest clause emphasized.</strong></p>
+  <p class="dimtext small">Provenance line: where the material comes from and how to regenerate it.</p>
+  <aside class="notes">Speaker notes mirror the markdown's notes block, slide by slide.</aside>
+</section>
+
+<!-- N · CONTENT SLIDE — the standard shape -->
+<section>
+  <div class="eyebrow">section · locator (e.g. "walkthrough · seq 4–5")</div>
+  <h2>Slide title</h2>
+<pre class="j">monospace exhibit — real captured content; category spans:
+<span class="ca">category-A token</span> · <span class="cb">category-B token</span> · <span class="cc">category-C token</span></pre>
+  <ul class="small">
+    <li>Didactic bullet: what the exhibit shows and <b>why it matters</b>.</li>
+    <li>Use <span class="pill ca">chips</span> to tie prose to the color coding.</li>
+  </ul>
+  <aside class="notes">What to say; the one sentence to land; cross-reference other slides
+  descriptively ("the memory slide"), never by number.</aside>
+</section>
+
+<!-- APPENDIX — one section wrapping nested sections = vertical stack (↓ from the last slide) -->
+<section>
+  <section>
+    <div class="eyebrow">appendix A1</div>
+    <h2>Backup slide for Q&amp;A</h2>
+    <aside class="notes">Walk only if asked.</aside>
+  </section>
+  <section>
+    <div class="eyebrow">appendix A2</div>
+    <h2>Another deep-end</h2>
+    <aside class="notes"></aside>
+  </section>
+</section>
+
+</div>
+</div>
+
+<script src="reveal/reveal.js"></script>
+<script src="reveal/notes.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    width: 1280,
+    height: 720,
+    margin: 0.06,
+    controls: true,
+    progress: true,
+    slideNumber: 'c/t',
+    transition: 'fade',
+    plugins: [ RevealNotes ]
+  });
+</script>
+</body>
+</html>
