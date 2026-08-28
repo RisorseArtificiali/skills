@@ -1,21 +1,23 @@
 # Third-party notices
 
 The `forked/` directory contains skills derived from MIT-licensed upstream
-repositories, modified locally. The upstream license texts are retained below,
-per their terms. `skills/` contains original work (repo MIT license applies).
+repositories, kept as pinned snapshots — some modified locally. The upstream
+license texts are retained below, per their terms. `skills/` contains original
+work (repo MIT license applies).
 
 ## Derivation map
 
-| Skill | Upstream repo | Base | Local changes |
+Verified on 2026-08-28 by diffing each fork against its base snapshot commit:
+"byte-identical" means no differences at all. The reasons behind each change
+are described in [`forked/README.md`](forked/README.md).
+
+| Skill | Upstream repo | Base snapshot | Local changes |
 |---|---|---|---|
-| forked/brainstorming | https://github.com/obra/superpowers | snapshot 2026-07-28 (pre v6.3.0) | light edits to the opening path description; upstream has since restructured |
-| forked/subagent-driven-development | https://github.com/obra/superpowers | snapshot pre-v6.3.0 | added "Model Selection — always inherit" (2026-08-27 maintainer policy, replacing model tiering) and "Fast, safe test iteration (Maven projects only)" |
-| forked/writing-plans | https://github.com/obra/superpowers | snapshot 2026-07-28 | added "Deviation Protocol" section (never existed upstream) |
-| forked/doubt-driven-development | https://github.com/addyosmani/agent-skills | snapshot 2026-07-28 | path fixes (`../../references/` -> `references/`) for standalone installation |
-| forked/grilling | https://github.com/mattpocock/skills | snapshot 2026-07-28 | light edits (4 lines) |
-| forked/grill-me | https://github.com/mattpocock/skills | snapshot 2026-07-28 | light edits (1 line) |
-| forked/handoff | https://github.com/mattpocock/skills | snapshot 2026-07-28 | light edits (6 lines) |
-| forked/git-guardrails-claude-code | https://github.com/mattpocock/skills | snapshot 2026-07-28 | light edits (1 line) |
+| forked/subagent-driven-development | https://github.com/obra/superpowers | `44c9b2d` (2026-07-28, pre-v6.3.0) | added "Model Selection — always inherit" (2026-08-27 maintainer policy, replacing upstream's model tiering; the fix-loop wording was updated to match: rounds 4–5 re-dispatch a fresh implementer with fuller context instead of a more capable model) and "Fast, safe test iteration (Maven projects only)" |
+| forked/writing-plans | https://github.com/obra/superpowers | `44c9b2d` (2026-07-28) | added the "Deviation Protocol" section and a per-task "Guardrails" block (neither existed upstream) |
+| forked/doubt-driven-development | https://github.com/addyosmani/agent-skills | `7829ffd` (2026-07-26) | none — byte-identical to the snapshot. Upstream has since restructured its repository; our copy keeps the standalone-friendly `references/` paths (an earlier revision of this file wrongly listed those path differences as our local changes — they are upstream's later drift) |
+| forked/grilling | https://github.com/mattpocock/skills | `4128367` (2026-07-28) | replaced the question flow: upstream maps a "design tree" and asks the whole open "frontier" as one batched round of numbered questions; this copy asks one question at a time, each with the agent's recommended answer, and keeps the facts-vs-decisions split |
+| forked/handoff | https://github.com/mattpocock/skills | `4128367` (2026-07-28) | handoff storage moved from the OS temporary directory to `<repo>/.reviews/handoffs/<date>-<topic>.md` (kept out of version control via `.git/info/exclude`); topic derived from the command argument or branch name; one file per handoff; a pending/`done/` lifecycle whose cleanup instruction travels inside the handoff document itself |
 
 Upstream skills used unmodified are not vendored here; see README for the list.
 

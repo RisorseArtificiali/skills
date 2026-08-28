@@ -8,8 +8,10 @@ predictable — this repo is ours, opinionated and versioned.
 
 For any non-trivial feature or issue, the pipeline is:
 
-1. **brainstorming** *(fork)* — evaluate the idea/issue, converge on an approved
-   design. Falls to **interview-me** *(upstream)* when intent is underspecified.
+1. **brainstorming** — evaluate the idea/issue, converge on an approved
+   design (upstream's "three paths" model: spike / bounded / architectural —
+   the ceremony scales with the task, the approval gate never does).
+   Falls to **interview-me** *(upstream)* when intent is underspecified.
 2. **grilling** *(fork)* — stress-test the decisions one question at a time
    until shared understanding.
 3. **writing-prds** — phased PRD with falsifiable acceptance criteria; decompose
@@ -29,10 +31,18 @@ Around the pipeline: **doubt-driven-development** *(fork)* for in-flight second
 opinions, **review** for on-demand leveled reviews, **plan-walkthrough** /
 **pr-walkthrough** to review documents/PRs above the code level with the human
 in the loop, **issue-triage** as the issue radar, **git-guardrails-claude-code**
-*(fork)* as the destructive-git safety net, **handoff** *(fork)* to pass work
+as the destructive-git safety net, **handoff** *(fork)* to pass work
 between sessions, **catch-me-up** / **drink-from-the-firehose** to re-enter a
 project cold. Craft references: **navigating-java** (symbol-level Java
 navigation), **slides** (fully-local reveal.js decks).
+
+### Running a project with it
+
+The catalog above says what exists and how to install it.
+[**WORKFLOW.md**](WORKFLOW.md) says how to use it, for the human driving
+the agents: the pyramid of roles (who directs, who executes, and why the
+strongest model plans), the gates where a human decides, the daily rhythm,
+where knowledge lives, and how to wire a new machine or project.
 
 ## Own skills (`skills/`)
 
@@ -51,20 +61,18 @@ navigation), **slides** (fully-local reveal.js decks).
 
 ## Forks (`forked/`)
 
-MIT-licensed upstream skills we run with local modifications (see
-[`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md) for sources, base versions
-and the exact changes):
+Pinned snapshots of MIT-licensed upstream skills, some with local
+modifications (see [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md) for
+sources, base versions and the exact changes, and
+[`forked/README.md`](forked/README.md) for the reasons):
 
 | Skill | Upstream | Local delta |
 |---|---|---|
-| brainstorming | obra/superpowers | light edits; base snapshot 2026-07-28 |
 | subagent-driven-development | obra/superpowers | + "Model Selection — always inherit" policy, + Maven test-iteration section |
-| writing-plans | obra/superpowers | + "Deviation Protocol" section |
-| doubt-driven-development | addyosmani/agent-skills | path fixes for standalone install |
-| grilling | mattpocock/skills | light edits; base snapshot 2026-07-28 |
-| grill-me | mattpocock/skills | light edits |
-| handoff | mattpocock/skills | light edits |
-| git-guardrails-claude-code | mattpocock/skills | light edits |
+| writing-plans | obra/superpowers | + "Deviation Protocol" section, + per-task Guardrails block |
+| doubt-driven-development | addyosmani/agent-skills | none — pinned snapshot; keeps standalone-friendly paths after an upstream restructure |
+| grilling | mattpocock/skills | question flow rewritten: one question at a time with recommended answers (upstream asks batched rounds) |
+| handoff | mattpocock/skills | storage moved from the OS temp dir into the repo, one file per handoff, pending/done lifecycle |
 
 ## Upstream skills we use unmodified
 
@@ -74,8 +82,8 @@ thanks:
 | Skill | Repo |
 |---|---|
 | interview-me, context-engineering | addyosmani/agent-skills |
-| dispatching-parallel-agents, finishing-a-development-branch, requesting-code-review, systematic-debugging, using-git-worktrees | obra/superpowers |
-| codebase-design, diagnosing-bugs, domain-modeling, grill-with-docs, wait-what, writing-for-agents | mattpocock/skills |
+| brainstorming, dispatching-parallel-agents, finishing-a-development-branch, requesting-code-review, systematic-debugging, using-git-worktrees | obra/superpowers |
+| codebase-design, diagnosing-bugs, domain-modeling, grill-with-docs, grill-me, git-guardrails-claude-code, wait-what, writing-for-agents | mattpocock/skills |
 | ponytail-review | DietrichGebert/ponytail |
 
 Install any of them (and anything from this repo) with:
