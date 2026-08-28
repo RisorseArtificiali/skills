@@ -50,6 +50,13 @@ where knowledge lives, and how to wire a new machine or project.
 to "which skill right now?" — in the pipeline and in every other moment of
 project life — and `scripts/wire-machine.sh` automates the wiring.
 
+The agents themselves run in [**Lince**](https://lince.sh)
+([RisorseArtificiali/lince](https://github.com/RisorseArtificiali/lince)):
+every coding agent lives in an isolated sandbox, so even full permissions
+cannot damage the machine, and the dashboard drives several agents in
+parallel — each on its own task, in its own worktree. Our steady state is
+about five agents at a time, across one or two projects.
+
 ## Own skills (`skills/`)
 
 | Skill | What it does |
@@ -109,6 +116,15 @@ Three MCP servers complete the setup — none required by the skills, all worth 
 | Serena | https://github.com/oraios/serena | semantic code retrieval and editing — the backend `navigating-java` drives for symbol-level navigation |
 | Backlog.md | https://github.com/MrLesk/Backlog.md | human/agent project collaboration in git — where the `writing-prds` task decomposition lands |
 | qmd | https://github.com/tobi/qmd | local mini search engine over markdown — indexes the docs, plans and reviews the pipeline produces |
+
+## Also from us
+
+- [**Lince**](https://lince.sh) — sandbox + dashboard + hooks: the
+  multi-agent workstation this toolkit runs in
+  ([RisorseArtificiali/lince](https://github.com/RisorseArtificiali/lince)).
+- [**RisorseArtificiali**](https://risorseartificiali.com) — the organization
+  behind Lince and this skill set.
+- [**maeste.it**](https://maeste.it) — Stefano Maestri's site.
 
 ## License
 

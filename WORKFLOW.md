@@ -132,6 +132,27 @@ has a light path:
 What never scales down is the approval gate. "Simple" tasks are where
 unexamined assumptions cause the most wasted work.
 
+## Parallel by default, sandboxed always
+
+One agent in one terminal is the slow way. The toolkit is built to run in
+parallel: several agents work at the same time on different tasks, each in
+its own git worktree (the `using-git-worktrees` skill sets that up), so
+branches never step on each other. A practical steady state is about five
+agents at once, spread over one or two projects — enough parallelism to
+keep every gate busy, few enough to actually review what comes back.
+
+Parallel work at full permissions needs a hard safety floor: every agent
+runs inside an isolated sandbox — [**Lince**](https://lince.sh)
+([RisorseArtificiali/lince](https://github.com/RisorseArtificiali/lince)),
+so even an agent with every permission granted cannot damage the machine
+or anything outside its box. The Lince dashboard is the control room:
+live status, token usage, one swimlane per project — five parallel tasks
+stay legible at a glance.
+
+The review gates matter more, not less, when five agents produce at once.
+Each branch still goes through the same pipeline — and the walkthrough
+maps are how one reviewer keeps track of several parallel streams.
+
 ## Where knowledge lives
 
 - **Markdown is the only source of truth.** PRDs, specs, plans, review
