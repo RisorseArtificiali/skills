@@ -59,6 +59,34 @@ pipeline is built to interrupt you only where a human should decide.**
 Between gates you are not needed. That is the point: the skills carry the
 process so that your attention is spent only on decisions.
 
+The same story, as a picture:
+
+```mermaid
+flowchart TD
+    START(["Idea / issue / request"]) --> BRAIN["brainstorming<br/>(+ interview-me if intent is unclear)"]
+    BRAIN --> GRILL["grilling"]
+    GRILL --> G1{"Shared<br/>understanding?"}
+    G1 -- no --> GRILL
+    G1 -- "yes" --> PRD["writing-prds<br/>phased PRD + tasks"]
+    PRD --> G2{"You approve<br/>the PRD?"}
+    G2 -- no --> PRD
+    G2 -- "yes" --> PW["plan-walkthrough<br/>the stage-3 gate"]
+    PW --> G3{"Fit to become<br/>tasks?"}
+    G3 -- "findings" --> PRD
+    G3 -- "yes" --> PLANS["writing-plans<br/>one plan per task"]
+    PLANS --> SDD["subagent-driven-development<br/>implement - review - fix loop"]
+    SDD -->|"deviation report:<br/>you answer, work resumes"| SDD
+    SDD --> ACR["adversarial-code-review<br/>the pre-merge gate"]
+    ACR --> G4{"Verdict"}
+    G4 -- "BLOCK / FIX-THEN-MERGE" --> SDD
+    G4 -- "SHIP" --> MERGE{"Merge —<br/>your explicit call"}
+    MERGE --> DONE(["merged"])
+
+    SDD -. "quick second opinion" .- REV["review"]
+    SDD -. "in-flight doubt" .- DDD["doubt-driven-development"]
+    ACR -. "review above the code level" .- PRW["pr-walkthrough"]
+```
+
 ### The daily rhythm
 
 - **Back after a few days?** `/catch-me-up` — what happened while you were
@@ -113,21 +141,44 @@ unexamined assumptions cause the most wasted work.
 
 ## Wiring a new machine or project
 
-- **Skills at user level.** Install into your harness's user-level skills
-  directory (e.g. `~/.claude/skills/`) so every agent on the box sees
-  them natively — no per-project copies to sync.
-- **MCP registrations in the repo, workspace-scoped.** The project's
-  `.mcp.json` (and your other agents' equivalents) travels with the repo.
-  Global configs under `$HOME` are the first thing to evaporate on reboot,
-  reinstall or sandbox reset — the repo is the only persistent home for
-  machine wiring. Self-healing trick: start servers with an explicit
-  project flag so they re-activate on every boot.
-- **Machine-specific truths in an untracked notes file.** Keep an
-  `AGENTS.local.md` (referenced from `AGENTS.md`, never committed) for
-  what is true only on this box: read-only paths, missing toolchains,
-  credential routing, known traps. The agent reads it once instead of
-  rediscovering it expensively. Worktrees do not inherit untracked files —
-  symlink it.
-- **New repo, same ritual.** When an agent starts working on another
-  repository, replicate there: the pipeline section of your agents file,
-  the workspace-scoped MCP registrations, and the local notes file.
+`scripts/wire-machine.sh` does the mechanical part. It is idempotent,
+needs no sudo, and everything it does is user-level or in-repo:
+
+```sh
+scripts/wire-machine.sh --all        # check prerequisites, install skills, scaffold this repo
+scripts/wire-machine.sh --skills     # install the skill sets (AGENT=claude-code by default; override with AGENT=...)
+scripts/wire-machine.sh --scaffold   # AGENTS.local.md template + .git/info/exclude entries (run inside a repo)
+scripts/wire-machine.sh --check      # prerequisites and auth only
+```
+
+### Checklist — one-time per machine
+
+- [ ] Prerequisites present: `git`, `gh` (authenticated), `node`/`npx` — `--check` verifies them.
+- [ ] Skills installed at user level (e.g. `~/.claude/skills/`) so every
+      agent on the box sees them natively — no per-project copies to sync.
+- [ ] Credentials sorted: how git and gh authenticate here (credential
+      helper, token env vars, explicit push refspecs if needed) — and
+      written down in the local notes file.
+- [ ] Harness limits you will actually hit set deliberately (for example
+      per-task turn caps on long builds), not discovered mid-task.
+
+### Checklist — per project
+
+- [ ] MCP registrations workspace-scoped, in-repo (`.mcp.json` and your
+      other agents' equivalents); servers started with an explicit project
+      flag so they re-activate after any reboot or reset. Global configs
+      under `$HOME` are the first thing to evaporate — the repo is the
+      only persistent home for machine wiring.
+- [ ] `AGENTS.local.md` scaffolded (`--scaffold`), referenced from
+      `AGENTS.md`, and filled with this box's truths: read-only paths,
+      ephemeral directories, credential routing, known traps. Worktrees do
+      not inherit untracked files — symlink it.
+- [ ] `.git/info/exclude` holds the machine-local directories
+      (`.reviews/`, `.serena/`, `.qmd/`).
+- [ ] Optional: a local search index (qmd) over the markdown silos —
+      index, not store.
+- [ ] First session: run `/drink-from-the-firehose` to check onboarding
+      quality, and `/issue-triage` once to seed the rolling state.
+- [ ] When an agent starts on another repository: same ritual — pipeline
+      section in the agents file, workspace MCP registrations, local
+      notes file.

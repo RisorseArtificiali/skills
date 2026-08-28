@@ -43,6 +43,9 @@ The catalog above says what exists and how to install it.
 the agents: the pyramid of roles (who directs, who executes, and why the
 strongest model plans), the gates where a human decides, the daily rhythm,
 where knowledge lives, and how to wire a new machine or project.
+[**SKILLS-CHEATSHEET.md**](SKILLS-CHEATSHEET.md) is the one-glance answer
+to "which skill right now?" — in the pipeline and in every other moment of
+project life — and `scripts/wire-machine.sh` automates the wiring.
 
 ## Own skills (`skills/`)
 
