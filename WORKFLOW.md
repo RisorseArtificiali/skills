@@ -153,6 +153,27 @@ The review gates matter more, not less, when five agents produce at once.
 Each branch still goes through the same pipeline — and the walkthrough
 maps are how one reviewer keeps track of several parallel streams.
 
+## Say it, don't type it
+
+Much of the work is talking, not typing. On Linux,
+[**VoxCode**](https://github.com/RisorseArtificiali/voxcode) pipes your
+voice to whichever agent has focus, transcribed locally by Whisper — no
+audio leaves the machine. It installs with
+[Lince](https://lince.sh) (the main entry point); the repo is separate.
+
+The practice this enables: **brain-dumps of several minutes at a time**.
+When a task carries context that lives only in your head, saying it out
+loud — unstructured, in one long stream — transfers it faster and more
+completely than typing ever will. The transcript becomes the agent's
+briefing.
+
+It also bends the interview grammar. Brainstorming and the walkthroughs
+work in closed, multiple-choice questions — that stays the default. But
+when one of those questions triggers more than an answer — a stream of
+related ideas you did not know you had — ask the agent to switch to a
+free chat or deep-dive turn: talk it through for as long as it takes,
+then return to the closed questions.
+
 ## Where knowledge lives
 
 - **Markdown is the only source of truth.** PRDs, specs, plans, review
