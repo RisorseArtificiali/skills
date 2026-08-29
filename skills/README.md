@@ -1,3 +1,5 @@
+**English** · [Italiano](README_IT.md)
+
 # Skills
 
 This folder holds the skills we wrote ourselves. A skill is a written

@@ -1,3 +1,4 @@
+**English** · [Italiano](README_IT.md)
 
 The skill set we run daily on our coding agent harness: our own skills (`skills/`), forks of
 MIT-licensed upstream skills we maintain locally (`forked/`), and the workflow

@@ -1,3 +1,5 @@
+**English** · [Italiano](WORKFLOW_IT.md)
+
 # WORKFLOW — Running a project with this toolkit
 
 This page is for the human who drives agents equipped with these skills,

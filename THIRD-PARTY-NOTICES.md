@@ -1,3 +1,5 @@
+**English** · [Italiano](THIRD-PARTY-NOTICES_IT.md)
+
 # Third-party notices
 
 The `forked/` directory contains skills derived from MIT-licensed upstream
