@@ -1,3 +1,5 @@
+**English** · [Italiano](README_IT.md)
+
 # Forked skills
 
 This folder contains copies of skills from other repositories. All of them
