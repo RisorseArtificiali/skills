@@ -7,6 +7,12 @@ MCP servers and tools. The [README](README.md) is the catalog: what exists
 and how to install it. This page is the practice: how you run a project
 with it, day after day.
 
+A note on scope: this practice was distilled on large projects — 10+
+active contributors and 50+ people involved in some capacity. On smaller
+projects the skills work as they are; adapt the workflow freely to your
+needs as you go. One thing does not change with size: managing and
+orchestrating the agents is, and remains, a human role.
+
 ## The shape of the team: a pyramid, never inverted
 
 Three roles share the work:

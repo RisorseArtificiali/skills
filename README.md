@@ -5,6 +5,16 @@ MIT-licensed upstream skills we maintain locally (`forked/`), and the workflow
 that chains them. Skills are the unit that makes an agent's *process*
 predictable — this repo is ours, opinionated and versioned.
 
+## Built for large projects
+
+This workflow and this skill collection were created for projects with
+**10+ active contributors and 50+ people involved in some capacity**. That
+does not make them unsuitable for smaller ones — but there they may need
+some adaptation. Our advice: try the skills as they are, and adapt the
+workflow to your needs as you go. And one principle does not scale with
+project size, because it never changes: the role of managing and
+orchestrating the agents is, and remains, a human one.
+
 ## The workflow
 
 For any non-trivial feature or issue, the pipeline is:

@@ -6,6 +6,16 @@ nostre (`skills/`), le fork di skill upstream MIT che manteniamo localmente
 prevedibile il *processo* di un agente — questo repo è il nostro, opinionato e
 versionato.
 
+## Fatto per progetti grandi
+
+Questo workflow e questa collezione di skill sono nati per progetti con
+**10+ contributor attivi e 50+ persone coinvolte a vario titolo**. Non per
+questo sono inadatti a quelli più piccoli — ma lì potrebbero richiedere
+qualche adattamento. Il nostro consiglio: provate le skill così come sono, e
+adattate il workflow alle vostre esigenze di volta in volta. E un principio non
+scala con la dimensione del progetto, perché non cambia mai: il ruolo di
+gestire e orchestrare gli agenti è, e resta, degli umani.
+
 ## Il workflow
 
 Per qualsiasi feature o issue non banale, la pipeline è:
