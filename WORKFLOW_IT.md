@@ -7,6 +7,12 @@ server MCP e strumenti. Il [README](README_IT.md) è il catalogo: cosa esiste e
 come installarlo. Questa pagina è la pratica: come si guida un progetto con,
 giorno dopo giorno.
 
+Una nota di ambito: questa pratica è stata distillata su progetti grandi —
+10+ contributor attivi e 50+ persone coinvolte a vario titolo. Sui progetti più
+piccoli le skill funzionano così come sono; adattate liberamente il workflow
+alle vostre esigenze, di volta in volta. Una cosa non cambia mai con la scala:
+gestire e orchestrare gli agenti è, e resta, un ruolo umano.
+
 ## La forma della squadra: una piramide, mai rovesciata
 
 Tre ruoli si dividono il lavoro:
