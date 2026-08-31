@@ -35,6 +35,7 @@ rows seem to fit, the "two-second rules" at the bottom break the tie.
 | "The branch is finished — what now?" | `finishing-a-development-branch` |
 | "Write or update docs for agents" | `writing-for-agents` |
 | "Agent output is degrading — check the context setup" | `context-engineering` |
+| "This text targets people, and reads like AI wrote it" | `humanizer` — rewrites AI-sounding prose into natural prose. For human audiences: making text digestible, not hiding AI use |
 
 ## By moment
 

@@ -36,6 +36,7 @@ dirimono la questione.
 | "Il branch è finito — e adesso?" | `finishing-a-development-branch` |
 | "Scrivi o aggiorna i documenti per gli agenti" | `writing-for-agents` |
 | "L'output dell'agente sta degradando — controlla il setup del contesto" | `context-engineering` |
+| "Questo testo ha persone come target e sembra scritto da una macchina" | `humanizer` — riscrive la prosa che sa di AI in prosa naturale. Per pubblici umani: renderla digeribile, non nascondere l'uso dell'AI |
 
 ## Per momento
 

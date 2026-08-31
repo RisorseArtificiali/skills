@@ -116,6 +116,7 @@ ringraziamento:
 | brainstorming, dispatching-parallel-agents, finishing-a-development-branch, requesting-code-review, systematic-debugging, using-git-worktrees | obra/superpowers |
 | codebase-design, diagnosing-bugs, domain-modeling, grill-with-docs, grill-me, git-guardrails-claude-code, wait-what, writing-for-agents | mattpocock/skills |
 | ponytail-review | DietrichGebert/ponytail |
+| humanizer | blader/humanizer |
 
 Installale (e qualsiasi cosa da questo repo) con:
 
