@@ -12,7 +12,7 @@
 #
 # Environment overrides:
 #   AGENT                harness to install for   (default: claude-code)
-#   TOOLKIT_REPO         this repo's slug         (default: maeste/skills)
+#   TOOLKIT_REPO         this repo's slug         (default: RisorseArtificiali/skills)
 #   SUPERPOWERS_REPO     (default: obra/superpowers)
 #   MATTP_SKILLS_REPO    (default: mattpocock/skills)
 #   ADDY_SKILLS_REPO     (default: addyosmani/agent-skills)
@@ -22,7 +22,7 @@
 set -euo pipefail
 
 AGENT="${AGENT:-claude-code}"
-TOOLKIT_REPO="${TOOLKIT_REPO:-maeste/skills}"
+TOOLKIT_REPO="${TOOLKIT_REPO:-RisorseArtificiali/skills}"
 SUPERPOWERS_REPO="${SUPERPOWERS_REPO:-obra/superpowers}"
 MATTP_SKILLS_REPO="${MATTP_SKILLS_REPO:-mattpocock/skills}"
 ADDY_SKILLS_REPO="${ADDY_SKILLS_REPO:-addyosmani/agent-skills}"

@@ -122,8 +122,8 @@ Installale (e qualsiasi cosa da questo repo) con:
 
 ```sh
 npx skills add <owner>/<repo> -g -y --agent <your-agent> --skill <skill-name>
-# es. da questo repo, una volta pubblico:
-npx skills add maeste/skills -g -y --agent <your-agent> --skill review
+# es. da questo repo:
+npx skills add RisorseArtificiali/skills -g -y --agent <your-agent> --skill review
 ```
 
 ## Server MCP companion
