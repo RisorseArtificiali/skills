@@ -6,11 +6,11 @@ This folder holds the skills we wrote ourselves. A skill is a written
 procedure that a coding agent loads and follows: it teaches the agent how
 to do one job, step by step, instead of leaving the method to chance.
 
-Why does this matter to you? An agent without a fixed process is not
-consistent. It reviews code differently every time, forgets steps, and
-gives you answers you cannot fully trust. A skill makes the process
-repeatable: the same quality gates run on every task, and you can open the
-`SKILL.md` file and read exactly what the agent is going to do.
+It matters because an agent without a fixed process is not consistent. It
+reviews code differently every time, forgets steps, and gives you answers
+you cannot fully trust. A skill makes the process repeatable: the same
+quality gates run on every task, and you can open the `SKILL.md` file and
+read exactly what the agent is going to do.
 
 Each skill lives in its own folder. This page describes, for humans, what
 each skill does and what you get from using it. For how they chain
@@ -22,7 +22,7 @@ together in a full workflow, see the [main README](../README.md).
 
 Turns an approved idea or issue into a phased PRD (product requirements
 document), and then breaks it into backlog-ready tasks with testable
-acceptance criteria. It will not write a PRD from a raw idea — the
+acceptance criteria. It will not write a PRD from a raw idea; the
 decisions must already exist (from brainstorming or a discussed issue).
 Phases are ordered by risk, each phase ships something you can verify on
 its own, and every acceptance criterion must be falsifiable: there has to
@@ -30,8 +30,8 @@ be a concrete check that fails if the work is not done.
 
 **What you get:** a requirements document that an agent who never met you
 can execute and review against. Vague wishes ("works well", "is robust")
-get rewritten into observable behavior before anyone builds anything —
-this is what stops ambiguity from reaching the code.
+get rewritten into observable behavior before anyone builds anything; that
+is what stops ambiguity from reaching the code.
 
 ## Review
 
@@ -54,28 +54,28 @@ confirmed, what is only plausible, and what was not covered.
 ### review
 
 The quick, everyday version of the review above. One or two fresh reviewer
-subagents look at your current diff, a branch, or a PR — correctness bugs
+subagents look at your current diff, a branch, or a PR: correctness bugs
 first, plus reuse and simplification cleanups. Every finding is verified
 before it reaches you, and the list is ranked most severe first. Levels
 control the depth: low/medium gives you few, high-confidence findings;
 high casts a wider net and marks what could not be reproduced.
 
 **What you get:** a fast second opinion you can ask for in the middle of
-work, with almost no noise. "No findings" is a real answer — the skill
-does not invent nitpicks to justify the run.
+work, with almost no noise. "No findings" is a real answer; the skill does
+not invent nitpicks to justify the run.
 
 ### plan-walkthrough
 
-A logical review of a *document* — a PRD, an implementation plan, a design
-doc, a GitHub issue — with you in the loop. It opens a **visual dossier**:
-a Mermaid phase-and-dependency graph (with a warning on every phase that
-fails the "would we still merge what came before?" test), a traceability
-matrix from requirements to acceptance criteria, and an assumption map
+A logical review of a *document* (a PRD, an implementation plan, a design
+doc, a GitHub issue) with you in the loop. It opens a visual dossier: a
+Mermaid phase-and-dependency graph, with a warning on every phase that
+fails the "would we still merge what came before?" test; a traceability
+matrix from requirements to acceptance criteria; and an assumption map
 where every claim about the codebase is marked verified, unverified, or
 false. Then it walks you through the document step by step with closed
 questions, and triages the findings with you.
 
-**What you get:** the holes in a plan surface before anyone builds it —
+**What you get:** the holes in a plan surface before anyone builds it:
 unclear goals, missing acceptance criteria, assumptions that do not hold
 against the real codebase. Fixing a plan costs minutes; fixing the code
 built from it costs days. And the judgment is visual: you see the missing
@@ -83,19 +83,19 @@ coverage and the false assumptions in a diagram, not buried in prose.
 
 ### pr-walkthrough
 
-The same idea for a pull request or branch. It produces a **visual
-dossier**: a Mermaid before/after map of the architecture (only the
-touched part), an impact map that radiates from the change to every
-affected surface — the blast radius at a glance — and a seven-dimension
-traffic light: intent, architecture, impacts, user experience, operations,
-docs, tests. Then it walks you through the PR above the code level.
+The same idea for a pull request or branch. It produces a visual dossier:
+a Mermaid before/after map of the architecture (only the touched part), an
+impact map that radiates from the change to every affected surface (the
+blast radius at a glance), and a seven-dimension traffic light: intent,
+architecture, impacts, user experience, operations, docs, tests. Then it
+walks you through the PR above the code level.
 
 **What you get:** you can actually review a PR that is too large or too
-unfamiliar to grasp from the diff alone — as a reviewer, or before your
-own merge. Past hello-world size, impacts and risks are invisible in a
-raw diff; here they are drawn. And when AI makes the pace of change so
-fast that PR volume grows beyond any line-by-line reading, the map is
-what keeps review possible: see where the risk sits first, then zoom only
+unfamiliar to grasp from the diff alone, as a reviewer or before your own
+merge. Past hello-world size, impacts and risks are invisible in a raw
+diff; here they are drawn. And when AI makes the pace of change so fast
+that PR volume grows beyond any line-by-line reading, the map is what
+keeps review possible: see where the risk sits first, then zoom only
 where it matters.
 
 ## Navigate the code
@@ -104,7 +104,7 @@ where it matters.
 
 A method for moving around Java codebases with symbol-level tools (find
 definition, find callers, find implementations, type hierarchy) instead of
-text search — plus the Maven module structure knowledge that goes with it.
+text search, plus the Maven module structure knowledge that goes with it.
 It also lists what symbol tools cannot see (reflection, dependency
 injection by name, service loaders) and the string search that must back
 them up before any rename or deletion.
@@ -120,7 +120,7 @@ instead of whole files read top to bottom.
 
 After a few days away, it collects everything that happened in the
 project: PRs, issues, releases, commits on the main branch, new decisions
-and docs — plus the items assigned to you. It sorts the material by
+and docs, plus the items assigned to you. It sorts the material by
 importance and delivers a one-minute summary in chat, then a full HTML
 page where every item links to its source.
 
@@ -134,7 +134,7 @@ A guided, quiz-driven onboarding walkthrough of a project. It scans the
 repo, builds a chapter plan (what the project is, the module map, where
 decisions live, how to build and test, and so on), then teaches chapter by
 chapter. Short quizzes check understanding, and the difficulty adapts to
-your answers. You pick a role — developer, PM, designer, user — and the
+your answers. You pick a role (developer, PM, designer, user) and the
 sources and depth follow it.
 
 **What you get:** structured onboarding instead of random reading, and
@@ -145,7 +145,7 @@ every claim backed by a file or document you can open yourself.
 A fast, regular sweep of a repository's GitHub issues. It checks what is
 new, changed, or newly commented since the last run (it keeps a small
 rolling state document), then walks you through the issues one by one:
-short summary, what changed, a proposed urgency. It only reads — it never
+short summary, what changed, a proposed urgency. It only reads; it never
 closes, assigns, or comments on anything unless you say so.
 
 **What you get:** a quick giro over the backlog whenever you return to a
@@ -155,10 +155,11 @@ repo, with zero risk of accidental actions on GitHub.
 
 ### slides
 
-Builds a presentation as two artifacts: a markdown file — the source of
-truth, with speaker notes — and a reveal.js deck that works fully offline.
-The deck's assets are vendored (no CDN), and the theme is generated from
-design tokens, so it is consistent and easy to restyle.
+Builds a presentation as two artifacts: a markdown file, which is the
+source of truth and carries the speaker notes, and a reveal.js deck that
+works fully offline. The deck's assets are vendored (no CDN), and the
+theme is generated from design tokens, so it is consistent and easy to
+restyle.
 
 **What you get:** presentations you can edit as text, version in git, and
-present anywhere — including without internet access.
+present anywhere, including without internet access.

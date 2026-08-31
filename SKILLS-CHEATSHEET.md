@@ -1,6 +1,6 @@
 **English** · [Italiano](SKILLS-CHEATSHEET_IT.md)
 
-# SKILLS CHEATSHEET — which skill, when
+# SKILLS CHEATSHEET: which skill, when
 
 A lookup table for the human: you feel a need, you find the skill. The
 [workflow](WORKFLOW.md) tells the story; this page is the index. If two
@@ -15,7 +15,7 @@ rows seem to fit, the "two-second rules" at the bottom break the tie.
 | Shared understanding reached | `writing-prds` | approve the PRD before any task exists |
 | PRD or plan is written | `plan-walkthrough` | judge it at the stage-3 gate |
 | Tasks are approved | `writing-plans`, then `subagent-driven-development` | answer deviation reports only |
-| A branch is done | `adversarial-code-review` | read the verdict; then merge — explicitly |
+| A branch is done | `adversarial-code-review` | read the verdict; then merge, explicitly |
 
 ## Any moment, on demand
 
@@ -24,44 +24,46 @@ rows seem to fit, the "two-second rules" at the bottom break the tie.
 | "I am not sure about this decision we just made" | `doubt-driven-development` |
 | "Give this diff a quick look" | `review` (fast second opinion, mid-work) |
 | "This is about to merge, or it touches something risky" | `adversarial-code-review` |
-| "Help me understand / review this big PR" | `pr-walkthrough` — Mermaid map of the change; blast radius and risks at a glance |
-| "Is this document (PRD, plan, design, issue) any good?" | `plan-walkthrough` — visual dossier: phase graph, traceability matrix, assumption map |
+| "Help me understand / review this big PR" | `pr-walkthrough`: Mermaid map of the change; blast radius and risks at a glance |
+| "Is this document (PRD, plan, design, issue) any good?" | `plan-walkthrough`: visual dossier with phase graph, traceability matrix, assumption map |
 | "This test fails / this broke / it got slow" | `systematic-debugging`, `diagnosing-bugs` |
-| "Where is this in the Java code? Who calls it?" | `navigating-java` — before any grep |
+| "Where is this in the Java code? Who calls it?" | `navigating-java`, before any grep |
 | "This design area feels tangled" | `codebase-design` |
 | "Is this over-engineered?" | `ponytail-review` (a diff), `ponytail-audit` (a whole repo) |
-| "These tasks are independent — run them in parallel" | `dispatching-parallel-agents` |
+| "These tasks are independent, run them in parallel" | `dispatching-parallel-agents` |
 | "This work needs isolation from my workspace" | `using-git-worktrees` |
-| "The branch is finished — what now?" | `finishing-a-development-branch` |
+| "The branch is finished, what now?" | `finishing-a-development-branch` |
 | "Write or update docs for agents" | `writing-for-agents` |
-| "Agent output is degrading — check the context setup" | `context-engineering` |
+| "Agent output is degrading, check the context setup" | `context-engineering` |
+| "This text targets people, and reads like AI wrote it" | `humanizer`: rewrites AI-sounding prose into natural prose. For human audiences, the point is making text digestible, not hiding AI use |
 
 ## By moment
 
 ### Project start
-- New to the project (human!) → `drink-from-the-firehose` — role-aware,
+- New to the project (human!) → `drink-from-the-firehose`: role-aware,
   quiz-driven onboarding; every claim carries its source.
-- Setting up a new box or repo → the [wiring checklist](WORKFLOW.md#wiring-a-new-machine-or-project)
+- Setting up a new box or repo → the
+  [wiring checklist](WORKFLOW.md#wiring-a-new-machine-or-project)
   and `scripts/wire-machine.sh`.
 
 ### Day to day
-- Back after a few days → `catch-me-up` — one report, your open work first.
-- Session is closing → `handoff` — the next session reads a document, not
+- Back after a few days → `catch-me-up`: one report, your open work first.
+- Session is closing → `handoff`: the next session reads a document, not
   your memory.
 - A decision feels shaky while work is in flight → `doubt-driven-development`.
 
 ### Periodic
-- Weekly, or whenever you return → `issue-triage` — the radar: new,
+- Weekly, or whenever you return → `issue-triage`, the radar: new,
   changed, and yours.
 
 ### Decisions that deserve to leave traces
 - The design is worth ADRs and a glossary → `grill-with-docs` instead of
-  `grilling` — same interview, but it writes as it goes.
+  `grilling`: same interview, but it writes as it goes.
 - Domain terms need pinning down → `domain-modeling`.
 
 ### Communication
-- Something must be presented → `slides` — markdown source + offline deck.
-- An explanation did not land → `wait-what` — "re-pitch it, simpler".
+- Something must be presented → `slides`: markdown source + offline deck.
+- An explanation did not land → `wait-what`: "re-pitch it, simpler".
 - You want the agent to interview *you* → `grilling` (or `/grill-me`).
 
 ## Two-second rules
@@ -69,7 +71,7 @@ rows seem to fit, the "two-second rules" at the bottom break the tie.
 - **Merge-bound or risky?** → `adversarial-code-review`, not `review`.
   `review` is the everyday tool; the gate is the gate.
 - **Document or code?** Document → `plan-walkthrough`. Code → `review` /
-  `pr-walkthrough` (above the code level) — never line-level nitpicks at a gate.
+  `pr-walkthrough` (above the code level); never line-level nitpicks at a gate.
 - **Facing a big PR or a long document?** Start from the walkthrough's
   visual map (Mermaid): impacts and risks first, zoom after. At AI speed,
   the map is the only part of review that scales.
@@ -79,5 +81,5 @@ rows seem to fit, the "two-second rules" at the bottom break the tie.
   decisions → `grilling`. Shared understanding → `writing-prds`.
 - **Java and code structure?** → `navigating-java` first, grep second.
   Strings, configs, resources? → grep is the right tool there.
-- **Model older or smaller?** Keep the pipeline anyway — the skills are its
+- **Model older or smaller?** Keep the pipeline anyway; the skills are its
   guardrail, not an optional extra.

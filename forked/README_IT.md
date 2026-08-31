@@ -10,7 +10,7 @@ Teniamo copie locali per due motivi:
 
 1. **Pinning.** Congeliamo una versione che abbiamo testato. Le skill upstream
    evolvono in fretta, e a volte vengono ridisegnate del tutto. Un redesign può
-   essere ottimo per il suo autore e sbagliato per noi — con una copia pinnata,
+   essere ottimo per il suo autore e sbagliato per noi. Con una copia pinnata,
    il nostro workflow quotidiano non può cambiare da un giorno all'altro senza
    una decisione nostra.
 2. **Migliorie locali.** Alcune fork portano modifiche di cui abbiamo bisogno e
@@ -26,15 +26,15 @@ La tabella qui sotto è stata verificata contro upstream `main` il **2026-08-28*
 | handoff | mattpocock/skills | 2026-07-28 (`4128367`) | storage e ciclo di vita ridisegnati | salva ancora nella temp dir dell'OS |
 | writing-plans | obra/superpowers | 2026-07-28 (`44c9b2d`) | + Deviation Protocol, + Guardrails per task | aggiunta una riga "Spec" al template |
 | subagent-driven-development | obra/superpowers | 2026-07-28 (`44c9b2d`) | + policy always-inherit sui modelli, + test iteration Maven | sviluppo attivo nel frattempo |
-| doubt-driven-development | addyosmani/agent-skills | 2026-07-26 (`7829ffd`) | nessuna — snapshot esatto | repo ristrutturato; la nostra copia mantiene path standalone-friendly |
+| doubt-driven-development | addyosmani/agent-skills | 2026-07-26 (`7829ffd`) | nessuna (snapshot esatto) | repo ristrutturato; la nostra copia mantiene path standalone-friendly |
 
 Skill che un tempo vendevamo e oggi installiamo non modificate da upstream:
 
-- `brainstorming` (obra/superpowers) — abbiamo valutato il redesign upstream
+- `brainstorming` (obra/superpowers): abbiamo valutato il redesign upstream
   (il modello a "tre binari": spike / bounded / architectural) e lo abbiamo
   adottato; una volta adottato non restava alcun delta locale da giustificare
   una fork.
-- `grill-me` e `git-guardrails-claude-code` (mattpocock/skills) — le nostre
+- `grill-me` e `git-guardrails-claude-code` (mattpocock/skills): le nostre
   copie non avevano modifiche locali, e upstream oggi differisce solo per una
   riga di formulazione.
 
@@ -51,9 +51,9 @@ I fatti che si possono cercare nel repo vengono cercati, non chiesti; le
 decisioni vere vanno sempre a te. Nulla viene messo in atto finché non confermi
 la comprensione condivisa.
 
-**Le nostre modifiche:** upstream mappa un "design tree" e lancia a ogni round
-l'intera "frontier" di domande aperte, numerate in blocco. Abbiamo riscritto
-quel flusso nella versione sequenziale descritta qui sopra.
+**Le nostre modifiche:** upstream fa le domande a batch. Mappa un "design tree"
+e lancia a ogni round l'intera serie di domande numerate in blocco; noi abbiamo
+riscritto quel flusso nella versione sequenziale descritta qui sopra.
 
 **Perché:** più domande insieme sono difficili da gestire bene, e una risposta
 di solito cambia la domanda successiva che vale la pena fare. La risposta
@@ -70,13 +70,13 @@ del sistema operativo. Noi lo salviamo dentro il repo, in
 `.reviews/handoffs/<data>-<tema>.md`, tenuto fuori dal versionamento tramite
 `.git/info/exclude` (mai `.gitignore`). Il tema viene dall'argomento del
 comando o dal nome del branch; un file per handoff, così sessioni parallele non
-si sovrascrivono. Un handoff consumato viene spostato in `handoffs/done/` — e
+si sovrascrivono. Un handoff consumato viene spostato in `handoffs/done/`, e
 siccome nessuna skill gira sul lato che riceve, l'istruzione per farlo viaggia
 dentro il documento stesso.
 
 **Perché:** una temp directory può essere cancellata in qualunque momento, e
-l'handoff deve sopravvivere fino alla prossima sessione — forse giorni dopo,
-magari su un'altra macchina. Con il file accanto al repo, la nuova sessione lo
+l'handoff deve sopravvivere fino alla prossima sessione, forse giorni dopo e
+forse su un'altra macchina. Con il file accanto al repo, la nuova sessione lo
 trova dove vive il lavoro.
 
 ### writing-plans
@@ -85,10 +85,10 @@ Trasforma un task in un piano di implementazione per un agente esecutore che
 non vedrà mai questa conversazione: file esatti, snippet di codice esatti,
 passi di verifica. Il piano è un ordine di lavoro per uno sconosciuto.
 
-**Le nostre modifiche — due aggiunte al template del piano:**
+**Le nostre modifiche:** due aggiunte al template del piano.
 
 - **Deviation Protocol.** Se un passo non produce il risultato atteso
-  dichiarato, l'esecutore deve fermare il task e riportare — atteso vs
+  dichiarato, l'esecutore deve fermare il task e riportare: atteso vs
   osservato, e la più piccola domanda che sblocca. Niente adattare il piano,
   niente fix improvvisate, niente saltare avanti.
 - **Guardrails per task.** Ogni task porta con sé verbatim le invarianti del
@@ -107,13 +107,13 @@ Esegue un piano di implementazione task per task con subagent freschi: un
 implementer scrive il codice, un task reviewer lo verifica contro il piano, un
 fix loop risolve i finding, e una review finale copre l'intero branch.
 
-**Le nostre modifiche — due policy:**
+**Le nostre modifiche:** due policy.
 
 - **Model Selection — always inherit.** Ogni dispatch (implementer, reviewer,
   verifier, review finale) gira sul modello della sessione. Upstream assegnava
   modelli economici ai task "meccanici"; abbiamo rimosso quel tiering. Se un
   dispatch è troppo pesante, la risposta è un implementer fresco con più
-  contesto — mai un incremento silenzioso del modello.
+  contesto, mai un incremento silenzioso del modello.
 - **Fast, safe test iteration (solo progetti Maven).** Regole per tenere basso
   il costo per iterazione: quale plugin gira quale suffisso di test, perché
   `-DskipTests` può riportare un falso verde silenzioso sui test di
@@ -123,14 +123,14 @@ fix loop risolve i finding, e una review finale copre l'intero branch.
 **Perché:** nella pratica un task resta "meccanico" solo finché non succede
 qualcosa di inatteso, e i modelli più economici rispondono all'inatteso
 improvisando invece di fermarsi. La qualità viene dal fix loop, dal Deviation
-Protocol e dai gate di review — non dal tier del modello. Le regole Maven
+Protocol e dai gate di review, non dal tier del modello. Le regole Maven
 esistono perché un falso verde è peggiore di un fallimento: termina il loop
 mentre il codice è ancora rotto.
 
 ### doubt-driven-development
 
 Sottopone una decisione non banale a una review avversariale a contesto fresco
-*mentre il lavoro è in corso* — il complemento in itinere di
+*mentre il lavoro è in corso*: il complemento in itinere di
 adversarial-code-review, che gira alla fine.
 
 **Le nostre modifiche:** nessuna. Questo è lo snapshot upstream esatto.
@@ -139,4 +139,4 @@ adversarial-code-review, che gira alla fine.
 la nuova versione referenzia i suoi file di supporto con path che funzionano
 solo dentro quel layout. Il nostro snapshot mantiene i path relativi
 standalone-friendly, così la skill resta usabile da sola, senza adottare la
-struttura di directory forzata di upstream — installala ovunque e funziona.
+struttura di directory forzata di upstream: installala ovunque e funziona.
