@@ -10,7 +10,7 @@ We keep local copies for two reasons:
 
 1. **Pinning.** We freeze a version we have tested. Upstream skills evolve
    fast, and sometimes they are redesigned completely. A redesign may be
-   great for its author and wrong for us — with a pinned copy, our daily
+   great for its author and wrong for us. With a pinned copy, our daily
    workflow cannot change overnight without a decision on our side.
 2. **Local improvements.** Some forks carry changes we need and upstream
    does not have: a different interview style, a safer place to store
@@ -25,14 +25,14 @@ The table below was checked against upstream `main` on **2026-08-28**.
 | handoff | mattpocock/skills | 2026-07-28 (`4128367`) | storage and lifecycle redesigned | still saves to the OS temp dir |
 | writing-plans | obra/superpowers | 2026-07-28 (`44c9b2d`) | + Deviation Protocol, + per-task Guardrails | added a "Spec" header line to the template |
 | subagent-driven-development | obra/superpowers | 2026-07-28 (`44c9b2d`) | + always-inherit model policy, + Maven test iteration | active development since |
-| doubt-driven-development | addyosmani/agent-skills | 2026-07-26 (`7829ffd`) | none — exact snapshot | repo restructured; our copy keeps standalone-friendly paths |
+| doubt-driven-development | addyosmani/agent-skills | 2026-07-26 (`7829ffd`) | none (exact snapshot) | repo restructured; our copy keeps standalone-friendly paths |
 
 Skills we used to vendor and now install unmodified from upstream instead:
 
-- `brainstorming` (obra/superpowers) — we evaluated upstream's redesign (the
+- `brainstorming` (obra/superpowers): we evaluated upstream's redesign (the
   "three paths" model: spike / bounded / architectural) and adopted it; once
   adopted there was no local delta left to justify a fork.
-- `grill-me` and `git-guardrails-claude-code` (mattpocock/skills) — our
+- `grill-me` and `git-guardrails-claude-code` (mattpocock/skills): our
   copies had no local changes, and upstream differs today only by a line of
   wording.
 
@@ -49,8 +49,8 @@ Facts that can be looked up in the repo are looked up, not asked; the real
 decisions are always put to you. Nothing is acted on until you confirm the
 shared understanding.
 
-**Our changes:** upstream asks questions in batches — it maps a "design
-tree" and fires a whole round of numbered questions at once. We rewrote
+**Our changes:** upstream asks questions in batches. It maps a "design
+tree" and fires a whole round of numbered questions at once; we rewrote
 that flow into the sequential one described above.
 
 **Why:** several questions at once are hard to answer well, and one
@@ -70,11 +70,11 @@ temporary directory. We save it inside the repo, at
 through `.git/info/exclude` (never `.gitignore`). The topic comes from the
 command argument or the branch name; one file per handoff, so parallel
 sessions never overwrite each other. A consumed handoff is moved to
-`handoffs/done/` — and since no skill runs on the receiving side, the
+`handoffs/done/`, and since no skill runs on the receiving side, the
 instruction to do that travels inside the handoff document itself.
 
 **Why:** a temp directory can be wiped at any moment, and the handoff must
-survive until the next session — possibly days later, on another machine.
+survive until the next session, possibly days later on another machine.
 With the file next to the repo, the new session finds it where the work
 lives.
 
@@ -84,10 +84,10 @@ Turns one task into an implementation plan for an executor agent that will
 never see this conversation: exact files, exact code snippets, verification
 steps. The plan is a work order for a stranger.
 
-**Our changes — two additions to the plan template:**
+**Our changes:** two additions to the plan template.
 
 - **Deviation Protocol.** If a step does not produce its stated expected
-  result, the executor must stop the task and report — expected vs
+  result, the executor must stop the task and report: expected vs
   observed, and the smallest question that unblocks it. No adapting the
   plan, no improvised fixes, no skipping ahead.
 - **Per-task Guardrails.** Each task carries its repo invariants verbatim:
@@ -104,13 +104,13 @@ Executes an implementation plan task by task with fresh subagents: an
 implementer writes the code, a task reviewer checks it against the plan,
 a fix loop resolves findings, and a final review covers the whole branch.
 
-**Our changes — two policies:**
+**Our changes:** two policies.
 
 - **Model Selection — always inherit.** Every dispatch (implementers,
   reviewers, verifiers, final review) runs on the session's model.
   Upstream assigned cheap models to "mechanical" tasks; we removed that
   tiering. If a dispatch is too heavy, the answer is a fresh implementer
-  with fuller context — never a silent model bump.
+  with fuller context, never a silent model bump.
 - **Fast, safe test iteration (Maven projects only).** Rules for keeping
   the per-iteration cost low: which plugin runs which test suffix, why
   `-DskipTests` can report a silent false green on integration tests, how
@@ -120,14 +120,14 @@ a fix loop resolves findings, and a final review covers the whole branch.
 **Why:** in practice a task stays "mechanical" only until something
 unexpected happens, and the cheapest models respond to the unexpected by
 improvising instead of stopping. Quality comes from the fix loop, the
-Deviation Protocol and the review gates — not from the model tier. The
+Deviation Protocol and the review gates, not from the model tier. The
 Maven rules exist because a false green is worse than a failure: it ends
 the loop while the code is still broken.
 
 ### doubt-driven-development
 
 Subjects a non-trivial decision to a fresh-context adversarial review
-*while the work is happening* — the in-flight complement to
+*while the work is happening*: the in-flight complement to
 adversarial-code-review, which runs at the end.
 
 **Our changes:** none. This is the exact upstream snapshot.
@@ -135,5 +135,4 @@ adversarial-code-review, which runs at the end.
 **Why we fork it:** upstream later restructured its repository, and the
 new version refers to its support files with paths that only work inside
 that repository layout. Our snapshot keeps the standalone-friendly
-relative paths, so the skill remains usable on its own, without adopting
-upstream's forced directory structure — install it anywhere and it works.
+relative paths, so the skill works wherever it is installed.
