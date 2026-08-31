@@ -3,9 +3,11 @@
 # Third-party notices
 
 The `forked/` directory contains skills derived from MIT-licensed upstream
-repositories, kept as pinned snapshots — some modified locally. The upstream
-license texts are retained below, per their terms. `skills/` contains original
-work (repo MIT license applies).
+repositories, kept as pinned snapshots, some modified locally. The upstream
+license texts are retained below, per their terms, for every repository this
+toolkit installs from: the three behind the forks and the two used as-is
+without a fork (DietrichGebert/ponytail, blader/humanizer). `skills/` contains
+original work (repo MIT license applies).
 
 ## Derivation map
 
@@ -21,7 +23,8 @@ are described in [`forked/README.md`](forked/README.md).
 | forked/grilling | https://github.com/mattpocock/skills | `4128367` (2026-07-28) | replaced the question flow: upstream maps a "design tree" and asks the whole open "frontier" as one batched round of numbered questions; this copy asks one question at a time, each with the agent's recommended answer, and keeps the facts-vs-decisions split |
 | forked/handoff | https://github.com/mattpocock/skills | `4128367` (2026-07-28) | handoff storage moved from the OS temporary directory to `<repo>/.reviews/handoffs/<date>-<topic>.md` (kept out of version control via `.git/info/exclude`); topic derived from the command argument or branch name; one file per handoff; a pending/`done/` lifecycle whose cleanup instruction travels inside the handoff document itself |
 
-Upstream skills used unmodified are not vendored here; see README for the list.
+Upstream skills used unmodified are not vendored here; see README for the
+list. Their licenses are retained above like the others.
 
 ## License texts
 
@@ -129,3 +132,30 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+### 5. blader/humanizer — MIT
+
+```
+MIT License
+
+Copyright (c) 2025 Siqi Chen
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
