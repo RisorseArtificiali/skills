@@ -46,7 +46,8 @@ and **pr-walkthrough** review documents and PRs above the code level with
 the human in the loop; each leaves a visual dossier (Mermaid diagrams:
 before/after architecture, impact map, phase graph, traceability,
 assumptions) so that impacts and risks are seen, not imagined.
-**issue-triage** is the issue radar, **git-guardrails-claude-code** the
+**issue-triage** is the issue radar, **issue-reply** the conversation that
+answers what it surfaces, **git-guardrails-claude-code** the
 destructive-git safety net, **handoff** *(fork)* passes work between
 sessions, and **catch-me-up** / **drink-from-the-firehose** re-enter a
 project cold. Craft references: **navigating-java** (symbol-level Java
@@ -83,6 +84,7 @@ long context gets from your head into the agent.
 | plan-walkthrough | logical review of PRDs/plans/design docs as a visual dossier (Mermaid phase graph, traceability matrix, assumption map), human in the loop |
 | pr-walkthrough | logical review of a PR above the code level: Mermaid before/after map + impact map, blast radius at a glance |
 | issue-triage | periodic GitHub-issue sweep with rolling state |
+| issue-reply | answer issue threads: brief, code-side analysis, draft, publish after approval |
 | navigating-java | structural Java navigation (symbols before grep) |
 | slides | presentation as markdown + vendored reveal.js deck |
 | catch-me-up | post-absence realignment briefing |

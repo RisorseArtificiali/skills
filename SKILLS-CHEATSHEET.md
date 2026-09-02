@@ -55,6 +55,8 @@ rows seem to fit, the "two-second rules" at the bottom break the tie.
 ### Periodic
 - Weekly, or whenever you return → `issue-triage`, the radar: new,
   changed, and yours.
+- The radar surfaced something worth answering → `issue-reply`: brief the
+  thread, draft the reply, publish after approval — one issue at a time.
 
 ### Decisions that deserve to leave traces
 - The design is worth ADRs and a glossary → `grill-with-docs` instead of

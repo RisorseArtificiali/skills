@@ -58,6 +58,9 @@ dirimono la questione.
 ### Periodico
 - Ogni settimana, o ogni volta che rientri → `issue-triage`, il radar: cosa è
   nuovo, cosa è cambiato, cosa serve da te.
+- Il radar ha fatto emergere qualcosa a cui rispondere → `issue-reply`: brief
+  del thread, bozza della risposta, pubblicazione dopo approvazione — una
+  issue alla volta.
 
 ### Decisioni che meritano di lasciare tracce
 - Il design merita ADR e un glossario → `grill-with-docs` invece di
