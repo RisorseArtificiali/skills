@@ -208,6 +208,16 @@ sono il modo in cui un solo reviewer tiene traccia di più flussi paralleli.
   lezioni. Indice, non store: l'indice è derivato, gettabile e ricostruibile;
   il markdown resta la verità.
 
+  Uso: l'agente ci arriva tramite il server MCP di qmd, quindi basta una
+  richiesta in naturale — «cerca nella knowledge base come funziona il
+  parking delle approvazioni», «trova le note di review sul session
+  state», «leggi `docs/architecture-decisions.md`». Nominare la modalità
+  affina la ricerca: termini esatti (BM25) quando conosci il vocabolario,
+  ricerca semantica quando conosci solo il senso, la query ibrida completa
+  con parsimonia (expansion e rerank vogliono calcolo — via server MCP
+  residente, non CLI fredda, su hardware modesto). Fai-da-me da shell:
+  `XDG_CACHE_HOME=<repo>/.qmd/cache qmd search "journal schema"`.
+
   Tenerlo fresco è manutenzione, non un lavoro per-file: `qmd update
   && qmd embed` è incrementale e idempotente, quindi schedulalo dove c'è
   calcolo — i modelli di embedding vogliono una GPU, e in una sandbox

@@ -208,6 +208,16 @@ then return to the closed questions.
   Index, not store: the index is derived, disposable, and rebuilt; the
   markdown stays the truth.
 
+  Using it: the agent reaches the index through the qmd MCP server, so a
+  plain ask is enough — "search the knowledge base for how the approval
+  parking works", "find the review notes about session state", "read
+  `docs/architecture-decisions.md`". Naming the mode sharpens the search:
+  exact terms (BM25) when you know the vocabulary, semantic search when
+  you only know the meaning, the full hybrid query sparingly (expansion
+  and rerank want compute — via a resident MCP server, not a cold CLI, on
+  modest hardware). Self-service from a shell:
+  `XDG_CACHE_HOME=<repo>/.qmd/cache qmd search "journal schema"`.
+
   Keeping it fresh is a maintenance chore, not a per-file job: `qmd update
   && qmd embed` is incremental and idempotent, so run it on a schedule on
   whatever machine has the compute — embedding models want a GPU, and
