@@ -118,7 +118,8 @@ o rosso è l'unica review che scala.
   `/drink-from-the-firehose`: onboarding role-aware e quiz-driven dove ogni
   affermazione porta la sua fonte.
 - **Routine**: `/issue-triage` come radar. Cosa è nuovo, cosa è cambiato, cosa
-  serve da te.
+  serve da te. `/issue-reply` risponde a ciò che il radar fa emergere: brief,
+  bozza, pubblicazione — una issue alla volta.
 - **Chiudi la sessione?** `handoff`: la prossima sessione riparte da un
   documento, non dalla tua memoria.
 - **Dubbi su una decisione mentre il lavoro è in volo?**

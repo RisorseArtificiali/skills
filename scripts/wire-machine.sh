@@ -12,7 +12,7 @@
 #
 # Environment overrides:
 #   AGENT                harness to install for   (default: claude-code)
-#   TOOLKIT_REPO         this repo's slug         (default: maeste/skills)
+#   TOOLKIT_REPO         this repo's slug         (default: RisorseArtificiali/skills)
 #   SUPERPOWERS_REPO     (default: obra/superpowers)
 #   MATTP_SKILLS_REPO    (default: mattpocock/skills)
 #   ADDY_SKILLS_REPO     (default: addyosmani/agent-skills)
@@ -22,14 +22,14 @@
 set -euo pipefail
 
 AGENT="${AGENT:-claude-code}"
-TOOLKIT_REPO="${TOOLKIT_REPO:-maeste/skills}"
+TOOLKIT_REPO="${TOOLKIT_REPO:-RisorseArtificiali/skills}"
 SUPERPOWERS_REPO="${SUPERPOWERS_REPO:-obra/superpowers}"
 MATTP_SKILLS_REPO="${MATTP_SKILLS_REPO:-mattpocock/skills}"
 ADDY_SKILLS_REPO="${ADDY_SKILLS_REPO:-addyosmani/agent-skills}"
 PONYTAIL_REPO="${PONYTAIL_REPO:-DietrichGebert/ponytail}"
 HUMANIZER_REPO="${HUMANIZER_REPO:-blader/humanizer}"
 
-TOOLKIT_SKILLS="adversarial-code-review catch-me-up drink-from-the-firehose issue-triage navigating-java plan-walkthrough pr-walkthrough review slides writing-prds grilling handoff subagent-driven-development writing-plans doubt-driven-development"
+TOOLKIT_SKILLS="adversarial-code-review catch-me-up drink-from-the-firehose issue-triage issue-reply navigating-java plan-walkthrough pr-walkthrough review slides writing-prds grilling handoff subagent-driven-development writing-plans doubt-driven-development"
 SUPERPOWERS_SKILLS="brainstorming dispatching-parallel-agents finishing-a-development-branch requesting-code-review systematic-debugging using-git-worktrees"
 MATTP_SKILLS="codebase-design diagnosing-bugs domain-modeling grill-with-docs grill-me git-guardrails-claude-code wait-what writing-for-agents"
 ADDY_SKILLS="interview-me context-engineering"

@@ -47,8 +47,10 @@ opinioni in itinere, **review** per le review a livello a richiesta.
 livello del codice con l'umano nel loop; ognuno lascia un dossier visivo
 (diagrammi Mermaid: architettura prima/dopo, mappa d'impatto, grafo delle fasi,
 tracciabilità, assunzioni) così che impatti e rischi si vedano, non si
-immaginino. **issue-triage** è il radar delle issue, **git-guardrails-claude-code**
-la rete di sicurezza sui comandi git distruttivi, **handoff** *(fork)* passa il
+immaginino. **issue-triage** è il radar delle issue, **issue-reply** la
+conversazione che risponde a ciò che il radar fa emergere,
+**git-guardrails-claude-code** la rete di sicurezza sui comandi git
+distruttivi, **handoff** *(fork)* passa il
 lavoro tra sessioni, e **catch-me-up** / **drink-from-the-firehose** servono a
 rientrare a freddo in un progetto. Riferimenti di mestiere:
 **navigating-java** (navigazione Java a livello di simbolo), **slides**
@@ -85,6 +87,7 @@ il modo in cui il contesto lungo passa dalla tua testa all'agente.
 | plan-walkthrough | review logica di PRD/piani/documenti di design come dossier visivo (grafo fasi Mermaid, matrice di tracciabilità, mappa delle assunzioni), umano nel loop |
 | pr-walkthrough | review logica di una PR sopra il livello del codice: mappa Mermaid prima/dopo + mappa d'impatto, blast radius a colpo d'occhio |
 | issue-triage | sweep periodico delle issue GitHub con stato rolling |
+| issue-reply | rispondere alle discussioni su issue: brief, analisi lato codice, bozza, pubblicazione dopo approvazione |
 | navigating-java | navigazione strutturale Java (simboli prima di grep) |
 | slides | presentazione come markdown + deck reveal.js vendored |
 | catch-me-up | briefing di riallineamento dopo un'assenza |
@@ -122,8 +125,8 @@ Installale (e qualsiasi cosa da questo repo) con:
 
 ```sh
 npx skills add <owner>/<repo> -g -y --agent <your-agent> --skill <skill-name>
-# es. da questo repo, una volta pubblico:
-npx skills add maeste/skills -g -y --agent <your-agent> --skill review
+# es. da questo repo:
+npx skills add RisorseArtificiali/skills -g -y --agent <your-agent> --skill review
 ```
 
 ## Server MCP companion

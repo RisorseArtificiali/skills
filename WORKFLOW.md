@@ -118,7 +118,8 @@ is yellow or red is the only review that scales.
   `/drink-from-the-firehose`: a role-aware, quiz-driven onboarding where
   every claim carries its source.
 - **Routine**: `/issue-triage` as the radar. What is new, what changed,
-  what needs you.
+  what needs you. `/issue-reply` answers what the radar surfaces: brief,
+  draft, publish — one issue at a time.
 - **Closing the session?** `handoff`: the next session picks up from a
   document, not from your memory.
 - **Doubt about a decision while work is in flight?**
