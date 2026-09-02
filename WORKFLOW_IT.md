@@ -208,6 +208,24 @@ sono il modo in cui un solo reviewer tiene traccia di più flussi paralleli.
   lezioni. Indice, non store: l'indice è derivato, gettabile e ricostruibile;
   il markdown resta la verità.
 
+  Uso: l'agente ci arriva tramite il server MCP di qmd, quindi basta una
+  richiesta in naturale — «cerca nella knowledge base come funziona il
+  parking delle approvazioni», «trova le note di review sul session
+  state», «leggi `docs/architecture-decisions.md`». Nominare la modalità
+  affina la ricerca: termini esatti (BM25) quando conosci il vocabolario,
+  ricerca semantica quando conosci solo il senso, la query ibrida completa
+  con parsimonia (expansion e rerank vogliono calcolo — via server MCP
+  residente, non CLI fredda, su hardware modesto). Fai-da-me da shell:
+  `XDG_CACHE_HOME=<repo>/.qmd/cache qmd search "journal schema"`.
+
+  Tenerlo fresco è manutenzione, non un lavoro per-file: `qmd update
+  && qmd embed` è incrementale e idempotente, quindi schedulalo dove c'è
+  calcolo — i modelli di embedding vogliono una GPU, e in una sandbox
+  CPU-only lo stesso lavoro costa ordini di grandezza di più. Un timer
+  systemd utente ogni 15 minuti è tutta l'automazione che serve; tieni le
+  unit nel repo (`.qmd/systemd/`) così il cablaggio viaggia col progetto.
+  Il flag force (`embed -f`) serve solo per cambiare il modello embedding.
+
 ## Cablare una nuova macchina o progetto
 
 `scripts/wire-machine.sh` fa la parte meccanica. È idempotente, non richiede
@@ -247,7 +265,8 @@ scripts/wire-machine.sh --check      # solo prerequisiti e auth
 - [ ] `.git/info/exclude` contiene le directory machine-locali (`.reviews/`,
       `.serena/`, `.qmd/`).
 - [ ] Opzionale: un indice di ricerca locale (qmd) sui silos markdown.
-      Indice, non store.
+      Indice, non store — e schedula il suo timer di manutenzione
+      (unit in `.qmd/systemd/`).
 - [ ] Prima sessione: gira `/drink-from-the-firehose` per verificare la
       qualità dell'onboarding, e `/issue-triage` una volta per inizializzare lo
       stato rolling.
