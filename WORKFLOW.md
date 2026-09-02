@@ -208,6 +208,15 @@ then return to the closed questions.
   Index, not store: the index is derived, disposable, and rebuilt; the
   markdown stays the truth.
 
+  Keeping it fresh is a maintenance chore, not a per-file job: `qmd update
+  && qmd embed` is incremental and idempotent, so run it on a schedule on
+  whatever machine has the compute — embedding models want a GPU, and
+  inside a CPU-only sandbox the same job is orders of magnitude slower.
+  A user systemd timer every 15 minutes is all the automation it needs;
+  keep the unit files in-repo (`.qmd/systemd/`) so the wiring travels
+  with the project. The force flag (`embed -f`) is only for changing the
+  embedding model.
+
 ## Wiring a new machine or project
 
 `scripts/wire-machine.sh` does the mechanical part. It is idempotent,
@@ -246,7 +255,8 @@ scripts/wire-machine.sh --check      # prerequisites and auth only
 - [ ] `.git/info/exclude` holds the machine-local directories
       (`.reviews/`, `.serena/`, `.qmd/`).
 - [ ] Optional: a local search index (qmd) over the markdown silos.
-      Index, not store.
+      Index, not store — and schedule its maintenance timer
+      (unit files in `.qmd/systemd/`).
 - [ ] First session: run `/drink-from-the-firehose` to check onboarding
       quality, and `/issue-triage` once to seed the rolling state.
 - [ ] When an agent starts on another repository: same ritual. Pipeline
