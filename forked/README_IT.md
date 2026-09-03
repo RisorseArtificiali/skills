@@ -25,7 +25,7 @@ La tabella qui sotto è stata verificata contro upstream `main` il **2026-08-28*
 | grilling | mattpocock/skills | 2026-07-28 (`4128367`) | flusso delle domande riscritto | ha evoluto ulteriormente lo stile a batch |
 | handoff | mattpocock/skills | 2026-07-28 (`4128367`) | storage e ciclo di vita ridisegnati | salva ancora nella temp dir dell'OS |
 | writing-plans | obra/superpowers | 2026-07-28 (`44c9b2d`) | + Deviation Protocol, + Guardrails per task | aggiunta una riga "Spec" al template |
-| subagent-driven-development | obra/superpowers | 2026-07-28 (`44c9b2d`) | + policy always-inherit sui modelli, + test iteration Maven | sviluppo attivo nel frattempo |
+| subagent-driven-development | obra/superpowers | 2026-07-28 (`44c9b2d`) | + policy always-inherit sui modelli, + test iteration Maven, + disciplina git nei worktree | sviluppo attivo nel frattempo |
 | doubt-driven-development | addyosmani/agent-skills | 2026-07-26 (`7829ffd`) | nessuna (snapshot esatto) | repo ristrutturato; la nostra copia mantiene path standalone-friendly |
 
 Skill che un tempo vendevamo e oggi installiamo non modificate da upstream:
@@ -107,7 +107,7 @@ Esegue un piano di implementazione task per task con subagent freschi: un
 implementer scrive il codice, un task reviewer lo verifica contro il piano, un
 fix loop risolve i finding, e una review finale copre l'intero branch.
 
-**Le nostre modifiche:** due policy.
+**Le nostre modifiche:** tre policy.
 
 - **Model Selection — always inherit.** Ogni dispatch (implementer, reviewer,
   verifier, review finale) gira sul modello della sessione. Upstream assegnava
@@ -119,13 +119,26 @@ fix loop risolve i finding, e una review finale copre l'intero branch.
   `-DskipTests` può riportare un falso verde silenzioso sui test di
   integrazione, come eseguire un solo test di integrazione per modulo, e perché
   due build Maven non devono mai condividere lo stesso working tree.
+- **Disciplina git nei worktree (requisito obbligatorio su questa macchina).**
+  In una sessione isolata in worktree il sandbox rifiuta i comandi git composti
+  (concatenazioni `cd X && git…`, `git -C <altro-path>`, redirect `GIT_DIR`),
+  e i subagent ereditano l'isolamento. La skill ora porta dentro la disciplina:
+  radicare per primo il worktree di esecuzione e tenervi l'intero piano, un
+  solo comando git plain per shell call, implementer sullo stesso worktree in
+  sequenza (solo le review read-only si sovrappongono all'implementer
+  successivo), gate finali in foreground, e wait loop con `pgrep -f "[m]vn -o"`
+  per non matchare la propria command line. Il template del prompt
+  dell'implementer incorpora le stesse regole per gli esecutori.
 
 **Perché:** nella pratica un task resta "meccanico" solo finché non succede
 qualcosa di inatteso, e i modelli più economici rispondono all'inatteso
 improvisando invece di fermarsi. La qualità viene dal fix loop, dal Deviation
 Protocol e dai gate di review, non dal tier del modello. Le regole Maven
 esistono perché un falso verde è peggiore di un fallimento: termina il loop
-mentre il codice è ancora rotto.
+mentre il codice è ancora rotto. Le regole sui worktree esistono perché quei
+rifiuti del sandbox hanno colpito ogni run parallelo su worktree che abbiamo
+provato: non scritte, ogni implementer fresco le riscopriva in corsa, un
+comando rifiutato alla volta.
 
 ### doubt-driven-development
 

@@ -481,3 +481,21 @@ Final reviewer: All requirements met. Deferred minors triaged: none block merge.
 
 Done! Using superpowers:finishing-a-development-branch.
 ```
+
+## Worktree git discipline (this box's sandbox — hard requirement)
+
+The session sandbox refuses "complex" git commands in a worktree-isolated session
+(`cd X && git…` chains, `git -C <other-path>`, `GIT_DIR` redirects). This bit every
+parallel-worktree attempt in the issue-#303 run:
+
+- Root the execution worktree via `superpowers:using-git-worktrees`/EnterWorktree FIRST and
+  keep the whole plan there. Subagents inherit that root at spawn — they can git only there.
+- ONE plain git command per Bash call; file ops are separate calls.
+- Implementers on ONE worktree are sequential (Maven `target/` collisions + git index races).
+  "Parallel" shrinks to read-only reviews overlapping the next implementer. Side worktrees +
+  a controller that commits is possible but is almost never worth the coordination cost.
+- Instruct implementers to run the final full gate in the FOREGROUND; backgrounded gates can
+  miss their wakeup and strand the agent. If two agents share a tree temporarily, gate with
+  `-Dtest='!OtherTaskWipTest'` exclusions, stated in the report.
+- Wait loops must not self-match: `pgrep -f "mvn -o"` matches its own command line — use
+  `pgrep -f "[m]vn -o"`.

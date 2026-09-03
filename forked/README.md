@@ -24,7 +24,7 @@ The table below was checked against upstream `main` on **2026-08-28**.
 | grilling | mattpocock/skills | 2026-07-28 (`4128367`) | question flow rewritten | evolved the batch style further |
 | handoff | mattpocock/skills | 2026-07-28 (`4128367`) | storage and lifecycle redesigned | still saves to the OS temp dir |
 | writing-plans | obra/superpowers | 2026-07-28 (`44c9b2d`) | + Deviation Protocol, + per-task Guardrails | added a "Spec" header line to the template |
-| subagent-driven-development | obra/superpowers | 2026-07-28 (`44c9b2d`) | + always-inherit model policy, + Maven test iteration | active development since |
+| subagent-driven-development | obra/superpowers | 2026-07-28 (`44c9b2d`) | + always-inherit model policy, + Maven test iteration, + worktree git discipline | active development since |
 | doubt-driven-development | addyosmani/agent-skills | 2026-07-26 (`7829ffd`) | none (exact snapshot) | repo restructured; our copy keeps standalone-friendly paths |
 
 Skills we used to vendor and now install unmodified from upstream instead:
@@ -104,7 +104,7 @@ Executes an implementation plan task by task with fresh subagents: an
 implementer writes the code, a task reviewer checks it against the plan,
 a fix loop resolves findings, and a final review covers the whole branch.
 
-**Our changes:** two policies.
+**Our changes:** three policies.
 
 - **Model Selection — always inherit.** Every dispatch (implementers,
   reviewers, verifiers, final review) runs on the session's model.
@@ -116,13 +116,26 @@ a fix loop resolves findings, and a final review covers the whole branch.
   `-DskipTests` can report a silent false green on integration tests, how
   to run one integration test per module, and why two Maven builds must
   never share a working tree.
+- **Worktree git discipline (hard requirement on this box).** In a
+  worktree-isolated session the sandbox refuses compound git commands
+  (`cd X && git…` chains, `git -C <other-path>`, `GIT_DIR` redirects), and
+  subagents inherit the isolation. The skill now carries the discipline:
+  root the execution worktree first and keep the whole plan inside it, one
+  plain git command per shell call, implementers on one worktree run
+  sequentially (only read-only reviews overlap the next implementer),
+  final gates run in the foreground, and wait loops use
+  `pgrep -f "[m]vn -o"` so they don't match their own command line. The
+  implementer prompt template embeds the same rules for the executors.
 
 **Why:** in practice a task stays "mechanical" only until something
 unexpected happens, and the cheapest models respond to the unexpected by
 improvising instead of stopping. Quality comes from the fix loop, the
 Deviation Protocol and the review gates, not from the model tier. The
 Maven rules exist because a false green is worse than a failure: it ends
-the loop while the code is still broken.
+the loop while the code is still broken. The worktree rules exist because
+those sandbox refusals hit every parallel-worktree run we tried: unwritten,
+each fresh implementer rediscovered them mid-task, one refused command at
+a time.
 
 ### doubt-driven-development
 
