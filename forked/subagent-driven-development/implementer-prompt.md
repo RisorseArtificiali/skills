@@ -138,4 +138,11 @@ Subagent (general-purpose):
     Use DONE_WITH_CONCERNS if you completed the work but have doubts about correctness.
     Use BLOCKED if you cannot complete the task. Use NEEDS_CONTEXT if you need
     information that wasn't provided. Never silently produce work you're unsure about.
+
+    ## Git Discipline (this box's sandbox)
+
+    - ONE plain git command per shell call, run from your working directory — no `cd X && git` chains, no `git -C <path>`, no GIT_DIR redirects. The sandbox refuses them; do not reword and retry.
+    - File operations (mkdir/cp/ln) go in separate shell calls, never chained with git.
+    - Work ONLY in the worktree your session is rooted in; you cannot git anywhere else.
+    - Run the final full build gate in the FOREGROUND (a backgrounded gate can miss its wakeup). If another agent shares the tree, exclude their WIP test class from your gate (`-Dtest='!TheirWipTest'`) and say so in your report.
 ```
