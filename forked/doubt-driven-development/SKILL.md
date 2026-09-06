@@ -43,8 +43,9 @@ If you doubt every keystroke, you ship nothing. The skill applies only to non-tr
 
 This skill is designed for the **main-session orchestrator**, where Step 3 (DOUBT, detailed below) can spawn a fresh-context reviewer.
 
-- **Do NOT add this skill to a persona's `skills:` frontmatter.** A persona that follows Step 3 would spawn another persona — the orchestration anti-pattern explicitly forbidden by `references/orchestration-patterns.md` ("personas do not invoke other personas").
-- **If you find yourself applying this skill from inside a subagent context** (where Claude Code prevents nested subagent spawn): the preferred path is to surface to the user that doubt-driven cannot run nested and let the main session handle it. As a last resort only, a degraded self-questioning fallback exists — rewrite ARTIFACT + CONTRACT as a fresh self-prompt with a hard mental separator from your prior reasoning, and walk Steps 1–5. This is **not fresh-context review** (you carry your own context with you), so flag the result as degraded and prefer escalation whenever the user is reachable.
+- **Do NOT add this orchestration skill to a reviewer's instructions.** Give reviewers the prompt below; they return findings to the main session rather than recursively orchestrating another review.
+- **Inside a subagent context**, return the artifact and review request to the controller. Nested-spawn support varies by host; the controller owns this skill's bounded loop. Self-questioning is not fresh-context review and must never be reported as such.
+- **In Codex**, use the available `spawn_agent` with `fork_turns: "none"` when supported, omit model/effort overrides, and respect available slots. If fresh subagents are unavailable, disclose that limitation.
 
 ## The Process
 
@@ -105,13 +106,17 @@ CONTRACT: <paste contract>
 
 **Pass ARTIFACT + CONTRACT only. Do NOT pass the CLAIM.** Handing the reviewer your conclusion biases it toward agreement. The reviewer must independently determine whether the artifact satisfies the contract.
 
-In Claude Code, the role-based reviewers in `agents/` start with isolated context by design and are usable here — see `agents/` for the roster and per-domain match.
+Use a generic fresh subagent with the prompt above. If the host has role-based reviewers, they may also be used; this standalone fork does not bundle an `agents/` roster.
 
 **The adversarial prompt above takes precedence over the persona's default response shape.** Personas like `code-reviewer` are written to produce balanced verdicts with both strengths and weaknesses; doubt-driven needs issues-only output. Paste the adversarial prompt verbatim into the invocation so it overrides the persona's default. If a persona's response shape can't be overridden cleanly, fall back to a generic subagent with the adversarial prompt.
 
 #### Cross-model escalation
 
 A single-model reviewer shares blind spots with the original author — a colder, different-architecture model catches them. Doubt-driven is already opt-in for non-trivial decisions, so within that scope offering cross-model is part of the skill's value, not optional friction.
+
+When the current agent is Codex, launching `codex` again does not establish
+model diversity. Verify the external model/provider before calling the result
+cross-model; otherwise describe it as another fresh-context review.
 
 **Interactive sessions: always offer. Never silently skip.**
 
@@ -226,7 +231,7 @@ If 3 cycles is "obviously insufficient" because the artifact is large: the artif
 - **`source-driven-development`**: SDD verifies *facts about frameworks* against official docs. Doubt-driven verifies *your reasoning about the artifact*. SDD checks the API exists; doubt-driven checks you used it correctly under the contract.
 - **`test-driven-development`**: TDD's RED step is doubt made concrete — a failing test is a disproof attempt. When TDD applies, that failing test *is* the doubt step for behavioral claims.
 - **`debugging-and-error-recovery`**: when the reviewer surfaces a real failure mode, drop into the debugging skill to localize and fix.
-- **Repo orchestration rules** (`references/orchestration-patterns.md`): this skill orchestrates from the main session. A persona calling another persona is anti-pattern B — see Loading Constraints above.
+- **Repo orchestration rules**: follow the current project's `AGENTS.md` and the Loading Constraints above. This standalone fork has no external orchestration-reference dependency.
 
 ## Verification
 

@@ -10,6 +10,8 @@ richiedono le licenze) nel file
 la mappa di derivazione in italiano. `skills/` contiene lavoro originale (si
 applica la licenza MIT del repo).
 
+Gli adattamenti del 2026-09-06 includono risoluzione delle skill per nome, disciplina della sandbox basata sull’host e metadati Codex. Il profilo Codex scarica snapshot upstream completi con licenze, applicando l’adattatore versionato: dettagli in [CODEX_IT.md](CODEX_IT.md).
+
 ## Mappa di derivazione
 
 Verificata il 2026-08-28 facendo il diff di ogni fork contro il suo commit di
@@ -20,7 +22,7 @@ di ogni modifica sono descritte in [`forked/README_IT.md`](forked/README_IT.md).
 |---|---|---|---|
 | forked/subagent-driven-development | https://github.com/obra/superpowers | `44c9b2d` (2026-07-28, pre-v6.3.0) | aggiunta "Model Selection — always inherit" (policy del maintainer, 2026-08-27, in sostituzione del tiering dei modelli upstream; la formulazione del fix loop è stata aggiornata di conseguenza: i round 4–5 ri-dispatchano un implementer fresco con più contesto invece di un modello più capiente), "Fast, safe test iteration (Maven projects only)", e "Worktree git discipline (this box's sandbox)" con l'analogo blocco "Git Discipline" nel prompt dell'implementer (aggiunte il 2026-09-03: il sandbox di sessione rifiuta i comandi git composti — un solo comando git plain per call, implementer sequenziali per worktree, gate in foreground, pattern pgrep senza self-match) |
 | forked/writing-plans | https://github.com/obra/superpowers | `44c9b2d` (2026-07-28) | aggiunte la sezione "Deviation Protocol" e un blocco "Guardrails" per task (nessuna delle due esisteva upstream) |
-| forked/doubt-driven-development | https://github.com/addyosmani/agent-skills | `7829ffd` (2026-07-26) | nessuna — byte-identical allo snapshot. Upstream ha poi ristrutturato il repository; la nostra copia mantiene i path standalone-friendly `references/` (una revisione precedente di questo file attribuiva erroneamente quelle differenze di path alle nostre modifiche locali — sono drift upstream successivo) |
+| forked/doubt-driven-development | https://github.com/addyosmani/agent-skills | `7829ffd` (2026-07-26) | rimossi riferimenti a supporti upstream assenti; dispatch Codex a contesto fresco; precisazione sulla diversità di modello (2026-09-06) |
 | forked/grilling | https://github.com/mattpocock/skills | `4128367` (2026-07-28) | sostituito il flusso delle domande: upstream mappa un "design tree" e pone l'intera "frontier" aperta come un unico round raggruppato di domande numerate; questa copia fa una domanda alla volta, ciascuna con la risposta consigliata dell'agente, e mantiene la separazione fatti-vs-decisioni |
 | forked/handoff | https://github.com/mattpocock/skills | `4128367` (2026-07-28) | lo storage degli handoff è stato spostato dalla directory temporanea dell'OS a `<repo>/.reviews/handoffs/<data>-<tema>.md` (tenuto fuori dal versionamento via `.git/info/exclude`); tema derivato dall'argomento del comando o dal nome del branch; un file per handoff; un ciclo pending/`done/` la cui istruzione di pulizia viaggia dentro il documento di handoff stesso |
 

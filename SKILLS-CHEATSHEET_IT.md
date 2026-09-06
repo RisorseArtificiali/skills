@@ -1,5 +1,8 @@
 [English](SKILLS-CHEATSHEET.md) · **Italiano**
 
+**Codex:** [installazione riproducibile, dipendenze esterne e adattamenti](CODEX_IT.md).
+
+
 # CHEATSHEET DELLE SKILL: quale skill, quando
 
 Una tabella di lookup per l'umano: senti un bisogno, trovi la skill. Il

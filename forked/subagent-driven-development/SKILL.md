@@ -71,10 +71,10 @@ digraph process {
 
     "Setup: worktree, ledger check, read plan, pre-flight review" [shape=box];
     "More tasks remain?" [shape=diamond];
-    "Dispatch final code reviewer (../requesting-code-review/code-reviewer.md)" [shape=box];
+    "Dispatch final code reviewer (requesting-code-review: code-reviewer.md)" [shape=box];
     "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals" [shape=box];
     "Final review clean: delete this plan's workspace" [shape=box];
-    "Use superpowers:finishing-a-development-branch" [shape=box style=filled fillcolor=lightgreen];
+    "Use finishing-a-development-branch" [shape=box style=filled fillcolor=lightgreen];
 
     "Setup: worktree, ledger check, read plan, pre-flight review" -> "Dispatch implementer subagent (./implementer-prompt.md)";
     "Dispatch implementer subagent (./implementer-prompt.md)" -> "Implementer asks questions?";
@@ -100,17 +100,17 @@ digraph process {
     "Park findings in ledger with rulings" -> "Append completion to ledger, mark todo complete";
     "Append completion to ledger, mark todo complete" -> "More tasks remain?";
     "More tasks remain?" -> "Dispatch implementer subagent (./implementer-prompt.md)" [label="yes"];
-    "More tasks remain?" -> "Dispatch final code reviewer (../requesting-code-review/code-reviewer.md)" [label="no"];
-    "Dispatch final code reviewer (../requesting-code-review/code-reviewer.md)" -> "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals";
+    "More tasks remain?" -> "Dispatch final code reviewer (requesting-code-review: code-reviewer.md)" [label="no"];
+    "Dispatch final code reviewer (requesting-code-review: code-reviewer.md)" -> "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals";
     "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals" -> "Final review clean: delete this plan's workspace";
-    "Final review clean: delete this plan's workspace" -> "Use superpowers:finishing-a-development-branch";
+    "Final review clean: delete this plan's workspace" -> "Use finishing-a-development-branch";
 }
 ```
 
 ## Setup
 
 Ensure the work happens in an isolated workspace: use
-superpowers:using-git-worktrees to create one or verify the existing one.
+using-git-worktrees to create one or verify the existing one.
 Never start implementation on a main/master branch without your human
 partner's explicit consent.
 
@@ -153,6 +153,16 @@ each finding beside the plan text that mandates it, asking which governs —
 before execution begins, not one interrupt per discovery mid-plan. If the
 scan is clean, proceed without comment. The review loop remains the net for
 conflicts that only emerge from implementation.
+
+## Codex dispatch
+
+Use the live subagent tools, not the `Subagent (general-purpose)` template syntax
+as a literal API call. For fresh workers and reviewers set `fork_turns: "none"`
+on `spawn_agent` when supported; the default may copy the session history.
+Resume an idle implementer with `followup_task` when available. Respect available
+slots and omit model/effort overrides. If delegation is unavailable, disclose it
+and use `executing-plans` when the user has authorized inline execution; never
+claim that self-review was an independent review.
 
 ## Model Selection — always inherit
 
@@ -310,7 +320,7 @@ Model Selection), with the brief path, the report-file path, the open
 findings, and this framing: "A prior implementer attempted this task
 [N] times; you own it now. Read the report file for what was tried." A loop
 that survives three resumes usually means the implementer cannot see its
-own problem — fresh eyes and a capability bump in one move.
+own problem — fresh eyes with the same inherited model.
 
 **Every round, either way:** the implementer fixes, re-runs the tests
 covering the amended code, appends its fix report to the same report file,
@@ -376,8 +386,8 @@ branch started from, e.g. `git merge-base main HEAD`) and include the
 printed path in the final review dispatch, so the final reviewer reads
 one file instead of re-deriving the branch diff with git commands. Dispatch
 on the inherited session model (see Model Selection), using
-superpowers:requesting-code-review's
-[code-reviewer.md](../requesting-code-review/code-reviewer.md). Point it at
+requesting-code-review's
+`code-reviewer.md` inside the installed `requesting-code-review` skill (locate that skill by name first). Point it at
 the ledger's deferred-minor and parked lines so it can triage which must be
 fixed before merge.
 
@@ -400,7 +410,7 @@ delete this plan's workspace (`rm -rf <workspace>`) — the git history is
 the record now. Sibling directories belong to other plans; leave them
 alone.
 
-Use superpowers:finishing-a-development-branch.
+Use finishing-a-development-branch.
 
 ## Common Rationalizations
 
@@ -479,23 +489,20 @@ Final reviewer: All requirements met. Deferred minors triaged: none block merge.
 
 [Delete this plan's workspace — the record now lives in git]
 
-Done! Using superpowers:finishing-a-development-branch.
+Done! Using finishing-a-development-branch.
 ```
 
-## Worktree git discipline (this box's sandbox — hard requirement)
+## Worktree and host discipline
 
-The session sandbox refuses "complex" git commands in a worktree-isolated session
-(`cd X && git…` chains, `git -C <other-path>`, `GIT_DIR` redirects). This bit every
-parallel-worktree attempt in the issue-#303 run:
+Use the session's actual permissions and tool definitions. Give each worker its
+working directory explicitly. In Codex, use the shell tool's `workdir` argument;
+use a native worktree tool when the host provides one. Restrictions on compound
+git commands, `git -C`, or paths outside the session root apply only when the
+current sandbox declares them; do not infer them from another machine.
 
-- Root the execution worktree via `superpowers:using-git-worktrees`/EnterWorktree FIRST and
-  keep the whole plan there. Subagents inherit that root at spawn — they can git only there.
-- ONE plain git command per Bash call; file ops are separate calls.
-- Implementers on ONE worktree are sequential (Maven `target/` collisions + git index races).
-  "Parallel" shrinks to read-only reviews overlapping the next implementer. Side worktrees +
-  a controller that commits is possible but is almost never worth the coordination cost.
-- Instruct implementers to run the final full gate in the FOREGROUND; backgrounded gates can
-  miss their wakeup and strand the agent. If two agents share a tree temporarily, gate with
-  `-Dtest='!OtherTaskWipTest'` exclusions, stated in the report.
-- Wait loops must not self-match: `pgrep -f "mvn -o"` matches its own command line — use
-  `pgrep -f "[m]vn -o"`.
+Implementers and builds on one worktree run sequentially. A reviewer that needs
+to edit files or build must have its own worktree, or wait for exclusive access.
+Wait for the final build process to finish and collect its exit status and test
+counts before reporting success. Background execution is valid only when the
+host can track and resume the process. For process lookup, use patterns such as
+`pgrep -f "[m]vn -o"` that cannot match their own command line.

@@ -16,7 +16,7 @@ Grep is not banned; it has a different job. Code structure → symbol tools. Str
 Work down this list; announce the tier when it affects confidence:
 
 1. **Serena MCP** (`mcp__serena__*` tools) — preferred. First use in a repo: `activate_project` with the repo path. The Java language server warms up on the first query; a slow first answer is normal, not broken.
-2. **Built-in LSP tool** (Claude Code harness) — definitions/references/diagnostics if present.
+2. **Built-in LSP tool** (if the current host exposes one) — definitions/references/diagnostics if present.
 3. **CLI fallback** (`ctags`, `rg`, `mvn`, `javap`) — recipes below. Reference results at this tier are *approximate*: say so when reporting them.
 
 ## Question → Tool (Serena tier)

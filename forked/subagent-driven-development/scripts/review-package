@@ -43,4 +43,5 @@ fi
 } > "$out"
 
 commits=$(git rev-list --count "${base}..${head}")
-echo "wrote ${out}: ${commits} commit(s), $(wc -c < "$out" | tr -d ' ') bytes"
+echo "wrote ${out}: ${commits} commit(s), $(wc -c < "$out" | tr -d ' ') bytes" >&2
+printf '%s\n' "$out"

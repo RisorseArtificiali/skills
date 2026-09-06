@@ -1,9 +1,17 @@
 ---
 name: review
-description: Quick leveled code review of the current diff, a branch, a PR number, or specific paths — correctness bugs first, plus reuse/simplification/efficiency cleanups. Findings are verified before being reported and ranked most-severe first. Use whenever the user says "review", "review this", "check my diff", "look over this change", "review PR N", or after finishing a piece of work and wanting a fast second opinion. Levels: low/medium (few, high-confidence findings) and high (broader coverage). Lighter than adversarial-code-review — use this on demand and mid-work; use adversarial-code-review as the pre-merge gate.
+description: "Quick leveled code review of the current diff, a branch, a PR number, or specific paths — correctness bugs first, plus reuse/simplification/efficiency cleanups. Findings are verified before being reported and ranked most-severe first. Use whenever the user says \"review\", \"review this\", \"check my diff\", \"look over this change\", \"review PR N\", or after finishing a piece of work and wanting a fast second opinion. Levels: low/medium (few, high-confidence findings) and high (broader coverage). Lighter than adversarial-code-review — use this on demand and mid-work; use adversarial-code-review as the pre-merge gate."
 ---
 
 # Review
+
+## Host tools
+
+In Codex, dispatch fresh reviewers with `spawn_agent` and `fork_turns: "none"`
+when supported; omit model/effort overrides and respect available slots. Use the
+session's question widget only in supported modes, otherwise ask in chat. If
+fresh subagents are unavailable, disclose the limitation before substituting
+inline analysis; do not report it as independent review.
 
 ## Overview
 

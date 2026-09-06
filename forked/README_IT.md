@@ -26,7 +26,7 @@ La tabella qui sotto è stata verificata contro upstream `main` il **2026-08-28*
 | handoff | mattpocock/skills | 2026-07-28 (`4128367`) | storage e ciclo di vita ridisegnati | salva ancora nella temp dir dell'OS |
 | writing-plans | obra/superpowers | 2026-07-28 (`44c9b2d`) | + Deviation Protocol, + Guardrails per task | aggiunta una riga "Spec" al template |
 | subagent-driven-development | obra/superpowers | 2026-07-28 (`44c9b2d`) | + policy always-inherit sui modelli, + test iteration Maven, + disciplina git nei worktree | sviluppo attivo nel frattempo |
-| doubt-driven-development | addyosmani/agent-skills | 2026-07-26 (`7829ffd`) | nessuna (snapshot esatto) | repo ristrutturato; la nostra copia mantiene path standalone-friendly |
+| doubt-driven-development | addyosmani/agent-skills | 2026-07-26 (`7829ffd`) | adattamenti standalone/Codex (2026-09-06) | repo ristrutturato; la nostra copia mantiene path standalone-friendly |
 
 Skill che un tempo vendevamo e oggi installiamo non modificate da upstream:
 
@@ -119,7 +119,7 @@ fix loop risolve i finding, e una review finale copre l'intero branch.
   `-DskipTests` può riportare un falso verde silenzioso sui test di
   integrazione, come eseguire un solo test di integrazione per modulo, e perché
   due build Maven non devono mai condividere lo stesso working tree.
-- **Disciplina git nei worktree (requisito obbligatorio su questa macchina).**
+- **Disciplina git nei worktree (policy originale di questa macchina, ora condizionata all’host).**
   In una sessione isolata in worktree il sandbox rifiuta i comandi git composti
   (concatenazioni `cd X && git…`, `git -C <altro-path>`, redirect `GIT_DIR`),
   e i subagent ereditano l'isolamento. La skill ora porta dentro la disciplina:
@@ -146,10 +146,9 @@ Sottopone una decisione non banale a una review avversariale a contesto fresco
 *mentre il lavoro è in corso*: il complemento in itinere di
 adversarial-code-review, che gira alla fine.
 
-**Le nostre modifiche:** nessuna. Questo è lo snapshot upstream esatto.
-
-**Perché teniamo la fork:** upstream ha poi ristrutturato il proprio repository, e
-la nuova versione referenzia i suoi file di supporto con path che funzionano
-solo dentro quel layout. Il nostro snapshot mantiene i path relativi
-standalone-friendly, così la skill resta usabile da sola, senza adottare la
-struttura di directory forzata di upstream: installala ovunque e funziona.
+**Le nostre modifiche (2026-09-06):** rimosse le dipendenze da directory di
+supporto non incluse nello snapshot, reso esplicito il dispatch Codex a contesto
+fresco e chiarito che un secondo processo Codex non prova diversità di modello.
+Le regole della sandbox SDD sono ora condizionate all’host effettivo, e i
+riferimenti tra skill si risolvono per nome installato. Dettagli in
+[CODEX_IT.md](../CODEX_IT.md).

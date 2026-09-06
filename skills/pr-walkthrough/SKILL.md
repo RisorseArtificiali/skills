@@ -1,9 +1,17 @@
 ---
 name: pr-walkthrough
-description: Logical review of a pull request or branch with the human reviewer in the loop — what the change does to the project's architecture, impacts and dependencies, user experience, operations, documentation and test story — as a visual dossier (Mermaid map) followed by an interactive step-by-step walkthrough with closed-menu questions and finding triage. Use whenever the user wants to understand or review a PR above the code level: "walk me through this PR", "logical review", "what does this PR really change", "help me review PR N", or when they must review a change too large or unfamiliar to grasp by reading the diff. Not for line-level code review (that is review / adversarial-code-review).
+description: "Logical review of a pull request or branch with the human reviewer in the loop — what the change does to the project's architecture, impacts and dependencies, user experience, operations, documentation and test story — as a visual dossier (Mermaid map) followed by an interactive step-by-step walkthrough with closed-menu questions and finding triage. Use whenever the user wants to understand or review a PR above the code level: \"walk me through this PR\", \"logical review\", \"what does this PR really change\", \"help me review PR N\", or when they must review a change too large or unfamiliar to grasp by reading the diff. Not for line-level code review (that is review / adversarial-code-review)."
 ---
 
 # PR Walkthrough
+
+## Host tools
+
+In Codex, dispatch fresh reviewers with `spawn_agent` and `fork_turns: "none"`
+when supported; omit model/effort overrides and respect available slots. Use the
+session's question widget only in supported modes, otherwise ask in chat. If
+fresh subagents are unavailable, disclose the limitation before substituting
+inline analysis; do not report it as independent review.
 
 ## Overview
 

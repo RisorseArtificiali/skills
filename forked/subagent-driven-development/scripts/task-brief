@@ -38,4 +38,5 @@ if [ ! -s "$out" ]; then
   exit 3
 fi
 
-echo "wrote ${out}: $(wc -l < "$out" | tr -d ' ') lines"
+echo "wrote ${out}: $(wc -l < "$out" | tr -d ' ') lines" >&2
+printf '%s\n' "$out"
