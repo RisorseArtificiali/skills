@@ -1,9 +1,17 @@
 ---
 name: plan-walkthrough
-description: Logical review of a PRD, implementation plan, design doc, or GitHub issue with the human reviewer in the loop — problem clarity, ambiguity, phase structure, acceptance criteria, reality check against the actual codebase, coherence with normative docs, scope/YAGNI, and impacts — as a visual dossier (phase graph, traceability matrix, assumption map) followed by an interactive step-by-step walkthrough with closed-menu questions and finding triage. Use whenever the user wants to review, stress-test, or understand a plan-shaped document before committing to it: "review this PRD", "walk me through this plan", "is this issue ready to work on", "fai le pulci a questo piano" — from a local file, a web link, a GitHub file, or a GitHub issue. Sibling of pr-walkthrough (which reviews code changes; this reviews the documents that precede them).
+description: "Logical review of a PRD, implementation plan, design doc, or GitHub issue with the human reviewer in the loop — problem clarity, ambiguity, phase structure, acceptance criteria, reality check against the actual codebase, coherence with normative docs, scope/YAGNI, and impacts — as a visual dossier (phase graph, traceability matrix, assumption map) followed by an interactive step-by-step walkthrough with closed-menu questions and finding triage. Use whenever the user wants to review, stress-test, or understand a plan-shaped document before committing to it: \"review this PRD\", \"walk me through this plan\", \"is this issue ready to work on\", \"fai le pulci a questo piano\" — from a local file, a web link, a GitHub file, or a GitHub issue. Sibling of pr-walkthrough (which reviews code changes; this reviews the documents that precede them)."
 ---
 
 # Plan Walkthrough
+
+## Host tools
+
+In Codex, dispatch fresh reviewers with `spawn_agent` and `fork_turns: "none"`
+when supported; omit model/effort overrides and respect available slots. Use the
+session's question widget only in supported modes, otherwise ask in chat. If
+fresh subagents are unavailable, disclose the limitation before substituting
+inline analysis; do not report it as independent review.
 
 ## Overview
 

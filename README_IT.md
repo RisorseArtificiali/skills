@@ -1,5 +1,8 @@
 [English](README.md) · **Italiano**
 
+**Codex:** [installazione riproducibile, dipendenze esterne e adattamenti](CODEX_IT.md).
+
+
 Il set di skill che usiamo ogni giorno sul nostro harness di coding agent: le skill
 nostre (`skills/`), le fork di skill upstream MIT che manteniamo localmente
 (`forked/`) e il workflow che le concatena. Le skill sono l'unità che rende
@@ -104,7 +107,7 @@ motivazioni):
 |---|---|---|
 | subagent-driven-development | obra/superpowers | + policy "Model Selection — always inherit", + sezione test-iteration Maven |
 | writing-plans | obra/superpowers | + sezione "Deviation Protocol", + blocco Guardrails per task |
-| doubt-driven-development | addyosmani/agent-skills | nessuna (snapshot pinnato); mantiene path usabili standalone dopo una ristrutturazione upstream |
+| doubt-driven-development | addyosmani/agent-skills | orchestrazione standalone e dispatch Codex; rimossi riferimenti a file upstream assenti |
 | grilling | mattpocock/skills | flusso delle domande riscritto: una domanda alla volta con risposta consigliata (upstream fa round raggruppati) |
 | handoff | mattpocock/skills | storage spostato dalla temp dir dell'OS dentro il repo, un file per handoff, ciclo pending/done |
 
@@ -116,9 +119,9 @@ ringraziamento.
 | Skill | Repo |
 |---|---|
 | interview-me, context-engineering | addyosmani/agent-skills |
-| brainstorming, dispatching-parallel-agents, finishing-a-development-branch, requesting-code-review, systematic-debugging, using-git-worktrees | obra/superpowers |
+| brainstorming, dispatching-parallel-agents, finishing-a-development-branch, requesting-code-review, systematic-debugging, using-git-worktrees, executing-plans, test-driven-development, verification-before-completion, receiving-code-review | obra/superpowers |
 | codebase-design, diagnosing-bugs, domain-modeling, grill-with-docs, grill-me, git-guardrails-claude-code, wait-what, writing-for-agents | mattpocock/skills |
-| ponytail-review | DietrichGebert/ponytail |
+| ponytail-review, ponytail-audit | DietrichGebert/ponytail |
 | humanizer | blader/humanizer |
 
 Installale (e qualsiasi cosa da questo repo) con:

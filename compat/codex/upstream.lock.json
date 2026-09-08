@@ -1,0 +1,63 @@
+{
+  "sources": [
+    {
+      "repo": "obra/superpowers",
+      "ref": "b36e0829c6d0140e93cfef2ca599b1b07d4a7797",
+      "skills": {
+        "brainstorming": "skills/brainstorming",
+        "dispatching-parallel-agents": "skills/dispatching-parallel-agents",
+        "finishing-a-development-branch": "skills/finishing-a-development-branch",
+        "requesting-code-review": "skills/requesting-code-review",
+        "systematic-debugging": "skills/systematic-debugging",
+        "using-git-worktrees": "skills/using-git-worktrees",
+        "executing-plans": "skills/executing-plans",
+        "test-driven-development": "skills/test-driven-development",
+        "verification-before-completion": "skills/verification-before-completion",
+        "receiving-code-review": "skills/receiving-code-review"
+      }
+    },
+    {
+      "repo": "mattpocock/skills",
+      "ref": "3cca18b368ae95cdbdebbff572ccafa662551015",
+      "skills": {
+        "codebase-design": "skills/engineering/codebase-design",
+        "diagnosing-bugs": "skills/engineering/diagnosing-bugs",
+        "domain-modeling": "skills/engineering/domain-modeling",
+        "grill-with-docs": "skills/engineering/grill-with-docs",
+        "grill-me": "skills/productivity/grill-me",
+        "wait-what": "skills/productivity/wait-what",
+        "writing-for-agents": "skills/productivity/writing-for-agents"
+      }
+    },
+    {
+      "repo": "addyosmani/agent-skills",
+      "ref": "48cb1168aeaaa70dfc2bbf709eddfa2a8ed8129a",
+      "skills": {
+        "interview-me": "skills/interview-me",
+        "context-engineering": "skills/context-engineering"
+      }
+    },
+    {
+      "repo": "DietrichGebert/ponytail",
+      "ref": "974d940a1c5344210874150b98ff0d2c861fab6a",
+      "skills": {
+        "ponytail-review": "skills/ponytail-review",
+        "ponytail-audit": "skills/ponytail-audit"
+      }
+    },
+    {
+      "repo": "blader/humanizer",
+      "ref": "9862685f575c65a8247f90369951df1b3416e3d6",
+      "skills": {
+        "humanizer": "."
+      }
+    }
+  ],
+  "excluded": [
+    {
+      "name": "git-guardrails-claude-code",
+      "repo": "mattpocock/skills",
+      "reason": "Installs Claude Code PreToolUse hooks; does not enforce Codex permissions."
+    }
+  ]
+}

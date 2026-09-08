@@ -1,5 +1,8 @@
 **English** · [Italiano](WORKFLOW_IT.md)
 
+**Codex:** [reproducible installation, upstream dependencies and adaptations](CODEX.md).
+
+
 # WORKFLOW: Running a project with this toolkit
 
 This page is for the human who drives agents equipped with these skills,

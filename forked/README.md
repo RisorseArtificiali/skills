@@ -25,7 +25,7 @@ The table below was checked against upstream `main` on **2026-08-28**.
 | handoff | mattpocock/skills | 2026-07-28 (`4128367`) | storage and lifecycle redesigned | still saves to the OS temp dir |
 | writing-plans | obra/superpowers | 2026-07-28 (`44c9b2d`) | + Deviation Protocol, + per-task Guardrails | added a "Spec" header line to the template |
 | subagent-driven-development | obra/superpowers | 2026-07-28 (`44c9b2d`) | + always-inherit model policy, + Maven test iteration, + worktree git discipline | active development since |
-| doubt-driven-development | addyosmani/agent-skills | 2026-07-26 (`7829ffd`) | none (exact snapshot) | repo restructured; our copy keeps standalone-friendly paths |
+| doubt-driven-development | addyosmani/agent-skills | 2026-07-26 (`7829ffd`) | standalone/Codex adaptations (2026-09-06) | repo restructured; our copy keeps standalone-friendly paths |
 
 Skills we used to vendor and now install unmodified from upstream instead:
 
@@ -116,7 +116,7 @@ a fix loop resolves findings, and a final review covers the whole branch.
   `-DskipTests` can report a silent false green on integration tests, how
   to run one integration test per module, and why two Maven builds must
   never share a working tree.
-- **Worktree git discipline (hard requirement on this box).** In a
+- **Worktree git discipline (original machine-specific policy; now conditional on the host).** In a
   worktree-isolated session the sandbox refuses compound git commands
   (`cd X && git…` chains, `git -C <other-path>`, `GIT_DIR` redirects), and
   subagents inherit the isolation. The skill now carries the discipline:
@@ -143,9 +143,8 @@ Subjects a non-trivial decision to a fresh-context adversarial review
 *while the work is happening*: the in-flight complement to
 adversarial-code-review, which runs at the end.
 
-**Our changes:** none. This is the exact upstream snapshot.
-
-**Why we fork it:** upstream later restructured its repository, and the
-new version refers to its support files with paths that only work inside
-that repository layout. Our snapshot keeps the standalone-friendly
-relative paths, so the skill works wherever it is installed.
+**Our changes (2026-09-06):** removed dependencies on support directories
+absent from the snapshot, made fresh Codex dispatch explicit, and clarified that
+another Codex process does not establish model diversity. SDD sandbox rules now
+follow the actual host; cross-skill references resolve by installed name.
+See [CODEX.md](../CODEX.md).

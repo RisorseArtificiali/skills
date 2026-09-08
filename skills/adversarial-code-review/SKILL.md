@@ -5,6 +5,14 @@ description: Full adversarial review of a code change — a branch, a diff, or a
 
 # Adversarial Code Review
 
+## Host tools
+
+In Codex, dispatch fresh reviewers with `spawn_agent` and `fork_turns: "none"`
+when supported; omit model/effort overrides and respect available slots. Use the
+session's question widget only in supported modes, otherwise ask in chat. If
+fresh subagents are unavailable, disclose the limitation before substituting
+inline analysis; do not report it as independent review.
+
 ## Overview
 
 A reviewer who shares the author's context produces "looks good to me" on code a fresh reviewer would flag immediately. A reviewer who only *reads* code produces findings that sound right but don't reproduce. This skill fixes both failure modes at once:
@@ -90,7 +98,12 @@ Select lenses. Diversity beats redundancy: three reviewers with different priori
 | **simplification** | reinvented stdlib, speculative abstraction, dead flexibility, unneeded dependency | change adds abstractions, config, or dependencies |
 | **spec-compliance** | drift between the artifact and its contract; requirements silently dropped or reinterpreted | a written spec, issue, or plan exists |
 
-Dispatch all selected reviewers **in parallel, in one message**, each with this prompt — fill the placeholders, change nothing else:
+Dispatch selected reviewers in parallel up to the host's available slots, each
+with the prompt below. Any worker that edits files, reverts implementation, or
+builds needs an exclusive worktree at the reviewed commit. Create separate
+detached worktrees for those workers, or serialize their access; read-only
+scanners may share. Track all review-owned worktrees for cleanup. Fill each
+WORKTREE placeholder with that worker's assigned path.
 
 ```
 Adversarial code review — {LENS} lens. You have fresh context: you know
@@ -132,7 +145,7 @@ Do not pass the reviewers your opinion of the change, the author's reasoning, or
 
 ### Step 4: VERIFY — Refute or reproduce
 
-Reviewer output is hypotheses, not truth. Plausible-but-wrong findings are the main failure mode of model reviews, and they are expensive: each one burns author time on a non-bug. Every finding goes to a skeptic subagent — dispatch them in parallel, one per finding (batch trivially related findings):
+Reviewer output is hypotheses, not truth. Plausible-but-wrong findings are the main failure mode of model reviews, and they are expensive: each one burns author time on a non-bug. Every finding goes to a skeptic subagent — one per finding (batch trivially related findings), with the same exclusive-worktree rule as Step 3:
 
 ```
 You are a skeptic. Your only job is to REFUTE the finding below. It survives
@@ -205,7 +218,9 @@ If the user applies fixes (or asks you to):
 2. Re-review the **fix diff only** (not the whole branch): one correctness reviewer + verification, per Steps 3–4. Fixes regress — the same finding can come back in a different form, and re-reviewing only what changed keeps the loop cheap enough to actually run.
 3. **Two re-review cycles maximum.** A branch still producing confirmed findings after two fix cycles is information about the branch, not a reason to grind a third — escalate to the user with the pattern you're seeing.
 
-When the review concludes: `git worktree remove <path>` (add `--force` only if you created throwaway state there yourself), and `git worktree prune`.
+When the review concludes, remove every worktree created for this review with
+`git worktree remove <path>` (add `--force` only for your own throwaway state),
+then `git worktree prune`. Keep pre-existing worktrees.
 
 ## Cross-Model Second Opinion (optional)
 

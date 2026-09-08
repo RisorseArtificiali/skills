@@ -21,6 +21,8 @@
 
 set -euo pipefail
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 AGENT="${AGENT:-claude-code}"
 TOOLKIT_REPO="${TOOLKIT_REPO:-RisorseArtificiali/skills}"
 SUPERPOWERS_REPO="${SUPERPOWERS_REPO:-obra/superpowers}"
@@ -30,10 +32,10 @@ PONYTAIL_REPO="${PONYTAIL_REPO:-DietrichGebert/ponytail}"
 HUMANIZER_REPO="${HUMANIZER_REPO:-blader/humanizer}"
 
 TOOLKIT_SKILLS="adversarial-code-review catch-me-up drink-from-the-firehose issue-triage issue-reply navigating-java plan-walkthrough pr-walkthrough review slides writing-prds grilling handoff subagent-driven-development writing-plans doubt-driven-development"
-SUPERPOWERS_SKILLS="brainstorming dispatching-parallel-agents finishing-a-development-branch requesting-code-review systematic-debugging using-git-worktrees"
+SUPERPOWERS_SKILLS="brainstorming dispatching-parallel-agents finishing-a-development-branch requesting-code-review systematic-debugging using-git-worktrees executing-plans test-driven-development verification-before-completion receiving-code-review"
 MATTP_SKILLS="codebase-design diagnosing-bugs domain-modeling grill-with-docs grill-me git-guardrails-claude-code wait-what writing-for-agents"
 ADDY_SKILLS="interview-me context-engineering"
-PONYTAIL_SKILLS="ponytail-review"
+PONYTAIL_SKILLS="ponytail-review ponytail-audit"
 HUMANIZER_SKILLS="humanizer"
 
 DRY_RUN=0
@@ -60,19 +62,30 @@ say() { printf '\n== %s\n' "$*"; }
 do_check() {
   say "Prerequisites"
   local missing=0
-  for cmd in git gh npx; do
+  local required="git gh npx"
+  [ "$AGENT" != codex ] || required="git gh python3 codex"
+  for cmd in $required; do
     if command -v "$cmd" >/dev/null 2>&1; then echo "  ok       $cmd"; else echo "  MISSING  $cmd"; missing=1; fi
   done
   # Test what matters — that the API is reachable with the ambient token —
   # rather than `gh auth status`, which fails if any stored account is stale.
-  if gh api --silent /user >/dev/null 2>&1; then echo "  ok       gh reaches the GitHub API (ambient auth)"; else echo "  WARN     gh cannot reach the GitHub API — skill installs will fail"; fi
+  if [ "$DRY_RUN" = 1 ]; then
+    echo "  [dry-run] would check GitHub API authentication"
+  elif gh api --silent /user >/dev/null 2>&1; then echo "  ok       gh reaches the GitHub API (ambient auth)"; else echo "  WARN     gh cannot reach the GitHub API — GitHub workflows need auth; public skill downloads may still work"; fi
   if [ "$missing" = 1 ]; then echo; echo "Fix the missing tools, then re-run."; exit 1; fi
   say "Harness skills directory (AGENT=$AGENT)"
   local dir="$HOME/.claude/skills"
+  [ "$AGENT" != codex ] || dir="$HOME/.agents/skills"
   if [ -d "$dir" ]; then echo "  ok       $dir ($(ls "$dir" | wc -l) entries)"; else echo "  absent   $dir (created on first install)"; fi
 }
 
 do_skills() {
+  if [ "$AGENT" = codex ]; then
+    local args=()
+    [ "$DRY_RUN" != 1 ] || args+=(--dry-run)
+    python3 "$SCRIPT_DIR/install-codex-skills.py" "${args[@]}"
+    return
+  fi
   say "Installing skills at user level (agent: $AGENT)"
   local ok=0 fail=0
   install_one() {
@@ -104,8 +117,8 @@ do_scaffold() {
 # AGENTS.local.md — machine-specific notes (untracked)
 
 Notes that are true on this dev box only. Referenced from AGENTS.md; never commit
-this file. Worktrees do not inherit untracked files: symlink it from a worktree
-(`ln -s ../../../AGENTS.local.md AGENTS.local.md` under `.claude/worktrees/...`).
+this file. Worktrees do not inherit untracked files: link it using the actual
+main-checkout path (`ln -s /absolute/main-checkout/AGENTS.local.md AGENTS.local.md`).
 
 ## Toolchain
 - Installed toolchains and versions; what is read-only or missing (and "do not try to install it").
@@ -122,13 +135,16 @@ TEMPLATE
     echo "  created  AGENTS.local.md — fill it in, and reference it from AGENTS.md"
   fi
   say ".git/info/exclude (machine-local, never committed)"
-  for entry in .reviews/ .serena/ .qmd/; do
-    if grep -qxF "$entry" .git/info/exclude 2>/dev/null; then
+  local exclude
+  exclude="$(git rev-parse --git-path info/exclude)"
+  for entry in AGENTS.local.md .reviews/ .serena/ .qmd/; do
+    if grep -qxF "$entry" "$exclude" 2>/dev/null; then
       echo "  ok       $entry already excluded"
     elif [ "$DRY_RUN" = 1 ]; then
       echo "  [dry-run] would exclude $entry"
     else
-      echo "$entry" >> .git/info/exclude
+      mkdir -p "$(dirname "$exclude")"
+      echo "$entry" >> "$exclude"
       echo "  excluded $entry"
     fi
   done

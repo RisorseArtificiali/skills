@@ -1,5 +1,8 @@
 [English](WORKFLOW.md) · **Italiano**
 
+**Codex:** [installazione riproducibile, dipendenze esterne e adattamenti](CODEX_IT.md).
+
+
 # WORKFLOW: Guidare un progetto con questo toolkit
 
 Questa pagina è per l'umano che guida agenti equipaggiati con queste skill,

@@ -1,5 +1,8 @@
 **English** · [Italiano](SKILLS-CHEATSHEET_IT.md)
 
+**Codex:** [reproducible installation, upstream dependencies and adaptations](CODEX.md).
+
+
 # SKILLS CHEATSHEET: which skill, when
 
 A lookup table for the human: you feel a need, you find the skill. The

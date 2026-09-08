@@ -19,12 +19,14 @@ are described in [`forked/README.md`](forked/README.md).
 |---|---|---|---|
 | forked/subagent-driven-development | https://github.com/obra/superpowers | `44c9b2d` (2026-07-28, pre-v6.3.0) | added "Model Selection — always inherit" (2026-08-27 maintainer policy, replacing upstream's model tiering; the fix-loop wording was updated to match: rounds 4–5 re-dispatch a fresh implementer with fuller context instead of a more capable model), "Fast, safe test iteration (Maven projects only)", and "Worktree git discipline (this box's sandbox)" with a matching "Git Discipline" block in the implementer prompt (added 2026-09-03: the session sandbox refuses compound git commands — one plain git command per call, sequential implementers per worktree, foreground gates, self-match-safe pgrep patterns) |
 | forked/writing-plans | https://github.com/obra/superpowers | `44c9b2d` (2026-07-28) | added the "Deviation Protocol" section and a per-task "Guardrails" block (neither existed upstream) |
-| forked/doubt-driven-development | https://github.com/addyosmani/agent-skills | `7829ffd` (2026-07-26) | none — byte-identical to the snapshot. Upstream has since restructured its repository; our copy keeps the standalone-friendly `references/` paths (an earlier revision of this file wrongly listed those path differences as our local changes — they are upstream's later drift) |
+| forked/doubt-driven-development | https://github.com/addyosmani/agent-skills | `7829ffd` (2026-07-26) | removed absent upstream support references; fresh Codex dispatch; clarified model diversity (2026-09-06) |
 | forked/grilling | https://github.com/mattpocock/skills | `4128367` (2026-07-28) | replaced the question flow: upstream maps a "design tree" and asks the whole open "frontier" as one batched round of numbered questions; this copy asks one question at a time, each with the agent's recommended answer, and keeps the facts-vs-decisions split |
 | forked/handoff | https://github.com/mattpocock/skills | `4128367` (2026-07-28) | handoff storage moved from the OS temporary directory to `<repo>/.reviews/handoffs/<date>-<topic>.md` (kept out of version control via `.git/info/exclude`); topic derived from the command argument or branch name; one file per handoff; a pending/`done/` lifecycle whose cleanup instruction travels inside the handoff document itself |
 
 Upstream skills used unmodified are not vendored here; see README for the
 list. Their licenses are retained above like the others.
+
+The 2026-09-06 adaptations also include skill lookup by name, host-specific sandbox discipline and Codex metadata. The Codex profile downloads full upstream snapshots with licenses and applies the tracked adapter; see [CODEX.md](CODEX.md).
 
 ## License texts
 
