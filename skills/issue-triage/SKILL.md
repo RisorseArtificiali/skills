@@ -75,6 +75,7 @@ Urgency disagreements are data: record the user's call, not the proposal.
 
 ## Interaction with Other Skills
 
+- **`issue-reply`** — when the user wants to answer an issue surfaced here, hand it over: that skill holds the conversation (brief, draft, publish).
 - **`plan-walkthrough`** — the deep-dive list is its feed: an issue marked for approfondimento gets the full document review there.
 - **`pr-walkthrough` / `writing-prds`** — downstream once an issue graduates from triage to work.
 
