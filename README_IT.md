@@ -132,6 +132,19 @@ npx skills add <owner>/<repo> -g -y --agent <your-agent> --skill <skill-name>
 npx skills add RisorseArtificiali/skills -g -y --agent <your-agent> --skill review
 ```
 
+### Installazione per Bob
+
+Installa i set di skill per Bob in `~/.bob/skills`:
+
+```sh
+AGENT=bob scripts/wire-machine.sh --dry-run --skills
+AGENT=bob scripts/wire-machine.sh --skills
+AGENT=bob scripts/wire-machine.sh --check
+```
+
+Lo script usa il [profilo Bob della CLI Skills](https://github.com/vercel-labs/skills/blob/main/src/agents.ts)
+(`--agent bob`), che punta alla directory dedicata di Bob anziché a `~/.claude/skills`.
+
 ## Server MCP companion
 
 Tre server MCP completano il setup. Nessuno è richiesto dalle skill, ma tutti

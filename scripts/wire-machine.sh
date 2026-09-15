@@ -11,7 +11,8 @@
 #   scripts/wire-machine.sh --dry-run ... print what would run, change nothing
 #
 # Environment overrides:
-#   AGENT                harness to install for   (default: claude-code)
+#   AGENT                harness to install for   (claude-code, codex, bob; default: claude-code)
+#                        Bob: AGENT=bob scripts/wire-machine.sh --skills → ~/.bob/skills
 #   TOOLKIT_REPO         this repo's slug         (default: RisorseArtificiali/skills)
 #   SUPERPOWERS_REPO     (default: obra/superpowers)
 #   MATTP_SKILLS_REPO    (default: mattpocock/skills)
@@ -75,7 +76,10 @@ do_check() {
   if [ "$missing" = 1 ]; then echo; echo "Fix the missing tools, then re-run."; exit 1; fi
   say "Harness skills directory (AGENT=$AGENT)"
   local dir="$HOME/.claude/skills"
-  [ "$AGENT" != codex ] || dir="$HOME/.agents/skills"
+  case "$AGENT" in
+    codex) dir="$HOME/.agents/skills" ;;
+    bob)   dir="$HOME/.bob/skills" ;;
+  esac
   if [ -d "$dir" ]; then echo "  ok       $dir ($(ls "$dir" | wc -l) entries)"; else echo "  absent   $dir (created on first install)"; fi
 }
 
@@ -91,7 +95,10 @@ do_skills() {
   install_one() {
     local repo="$1" skill="$2"
     printf '  %-32s (from %s) ' "$skill" "$repo"
-    if [ "$DRY_RUN" = 1 ]; then echo "[dry-run]"; return; fi
+    if [ "$DRY_RUN" = 1 ]; then
+      run npx -y skills@latest add "$repo" -g -y --agent "$AGENT" --skill "$skill"
+      return
+    fi
     if npx -y skills@latest add "$repo" -g -y --agent "$AGENT" --skill "$skill" >/dev/null 2>&1; then
       echo "ok"; ok=$((ok+1)); else echo "FAILED"; fail=$((fail+1)); fi
   }

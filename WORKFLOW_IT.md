@@ -239,6 +239,8 @@ scripts/wire-machine.sh --all        # controlla prerequisiti, installa le skill
 scripts/wire-machine.sh --skills     # installa i set di skill (AGENT=claude-code di default; override con AGENT=...)
 scripts/wire-machine.sh --scaffold   # template AGENTS.local.md + voci in .git/info/exclude (dentro un repo)
 scripts/wire-machine.sh --check      # solo prerequisiti e auth
+AGENT=bob scripts/wire-machine.sh --skills  # Bob: ~/.bob/skills
+AGENT=bob scripts/wire-machine.sh --check   # verifica la directory dedicata di Bob
 ```
 
 ### Checklist: una volta per macchina
