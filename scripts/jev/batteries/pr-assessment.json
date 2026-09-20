@@ -1,0 +1,113 @@
+{
+  "name": "pr-assessment",
+  "version": 1,
+  "notes": "Questions are constants: edit here, never inline in a skill. Phrasings are field-validated (2026-09-20 spike, lince PR-272 + OneRing PR-250). The needs_update fan-out uses deliberately neutral wording so both doc-drift shapes are caught: 'existing page goes stale' and 'new overlapping page stays unlinked'.",
+  "questions": {
+    "needs_update_{i}": {
+      "type": "noul",
+      "instructions": "Does the doc at `doc_inventory[{i}].path` ({path}, covering: {covers}) need an update for this change to keep the project's documentation accurate?",
+      "criteria": {
+        "true": {"what": "The page's content is or becomes wrong/incomplete given this change"},
+        "false": {"what": "The page remains accurate without any update"}
+      }
+    },
+    "intent_linked": {
+      "type": "noul",
+      "instructions": "Is this work connected to a linked issue, spec, or accepted proposal (see `pr.linked_issues` and `declared_intent`)?",
+      "criteria": {
+        "true": {"what": "There is a tracked issue, spec, or accepted proposal this change delivers"},
+        "false": {"what": "The change arrives with no tracked request or spec behind it"}
+      }
+    },
+    "intent_scope": {
+      "type": "choice",
+      "instructions": "Compare `declared_intent` with the sum of `logical_changes`: which is broader?",
+      "criteria": {
+        "changes_within_intent": "Every logical change does something the declared intent mentions",
+        "changes_broader": "Some logical change does work the declared intent does not mention",
+        "intent_broader": "The declared intent promises things the changes do not deliver"
+      }
+    },
+    "intent_verifiable": {
+      "type": "noul",
+      "instructions": "Is `declared_intent` specific enough that a reviewer can verify the change's scope against it?",
+      "criteria": {
+        "true": {"what": "The intent names concrete deliverables a reviewer can check"},
+        "false": {"what": "The intent is too vague to delimit what is in scope"}
+      }
+    },
+    "priority_{id}": {
+      "type": "score",
+      "instructions": "Rate how closely a human reviewer should examine logical change {id} ('{name}': {what}), considering `normative_sources`.",
+      "criteria": [
+        "Routine: no special human review attention needed.",
+        "Worth a look: a reviewer should examine this during review.",
+        "Must be discussed: review should not pass without addressing this."
+      ]
+    },
+    "risk_intent": {
+      "type": "noul",
+      "instructions": "Does the evidence in `pr`, `declared_intent`, `normative_sources` and `logical_changes` support a reviewer concern about intent?",
+      "criteria": {
+        "true": {"what": "The change set includes work that the declared intent does not cover, or silently reinterprets the intent"},
+        "false": {"what": "Every logical change falls within the declared intent"}
+      }
+    },
+    "risk_architecture": {
+      "type": "noul",
+      "instructions": "Does the evidence in `pr`, `declared_intent`, `normative_sources` and `logical_changes` support a reviewer concern about architecture?",
+      "criteria": {
+        "true": {"what": "Module boundaries, structural elements, or dependency relationships change in a way a reviewer must examine"},
+        "false": {"what": "No structural boundaries or dependency edges are touched"}
+      }
+    },
+    "risk_impacts": {
+      "type": "noul",
+      "instructions": "Does the evidence in `pr`, `declared_intent`, `normative_sources` and `logical_changes` support a reviewer concern about impacts?",
+      "criteria": {
+        "true": {"what": "An existing consumer, contract, or API surface can be affected by this change"},
+        "false": {"what": "Nothing outside the changed files observes a difference"}
+      }
+    },
+    "risk_ux": {
+      "type": "noul",
+      "instructions": "Does the evidence in `pr`, `declared_intent`, `normative_sources` and `logical_changes` support a reviewer concern about ux?",
+      "criteria": {
+        "true": {"what": "Commands, flags, config, output, or user-facing workflows change"},
+        "false": {"what": "No user-facing surface changes"}
+      }
+    },
+    "risk_ops": {
+      "type": "noul",
+      "instructions": "Does the evidence in `pr`, `declared_intent`, `normative_sources` and `logical_changes` support a reviewer concern about ops?",
+      "criteria": {
+        "true": {"what": "Deployment, migration, configuration, or rollback behavior changes"},
+        "false": {"what": "Nothing about deploying or upgrading changes"}
+      }
+    },
+    "risk_docs": {
+      "type": "noul",
+      "instructions": "Does the evidence in `pr`, `declared_intent`, `normative_sources` and `logical_changes` support a reviewer concern about docs?",
+      "criteria": {
+        "true": {"what": "Documentation that describes changed behavior exists but is not updated, or the change creates overlapping/conflicting documentation"},
+        "false": {"what": "No doc page is made stale or conflicting by this change"}
+      }
+    },
+    "risk_tests": {
+      "type": "noul",
+      "instructions": "Does the evidence in `pr`, `declared_intent`, `normative_sources` and `logical_changes` support a reviewer concern about tests?",
+      "criteria": {
+        "true": {"what": "A claimed behavior change lacks coverage somewhere in the change set"},
+        "false": {"what": "Every behavior change has coverage, or the change is non-behavioral"}
+      }
+    },
+    "walkthrough_mode": {
+      "type": "choice",
+      "instructions": "A human reviewer will now walk through this PR section by section. Given the number and shape of `logical_changes`, which grouping makes the review more effective?",
+      "criteria": {
+        "by_dimension": "One section per review dimension (intent, architecture, impacts, ...); best when few logical changes cut across many dimensions",
+        "by_logical_change": "One section per logical change, examined across the dimensions it touches; best when many distinct changes each need focused attention"
+      }
+    }
+  }
+}
