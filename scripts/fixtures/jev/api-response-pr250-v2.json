@@ -1,0 +1,70 @@
+{
+  "model": "jev-1.13.0",
+  "answers": {
+    "ctrl_risk_tests": {
+      "type": "noul",
+      "noul": 0.1
+    },
+    "ctrl_risk_architecture": {
+      "type": "noul",
+      "noul": 0.28
+    },
+    "ctrl_priority_C1": {
+      "type": "score",
+      "score": 1.29,
+      "confidence": 0.47,
+      "legend": {
+        "0": "Routine: no special human review attention needed.",
+        "1": "Worth a look: a reviewer should examine this during review.",
+        "2": "Must be discussed: review should not pass without addressing this."
+      },
+      "probabilities": {
+        "0": 0.03,
+        "1": 0.65,
+        "2": 0.32
+      }
+    },
+    "risk_docs_v1": {
+      "type": "noul",
+      "noul": 0.64
+    },
+    "risk_docs_v2": {
+      "type": "noul",
+      "noul": 0.29
+    },
+    "intent_linked": {
+      "type": "noul",
+      "noul": 0.94
+    },
+    "intent_scope": {
+      "type": "choice",
+      "choice": "changes_broader",
+      "confidence": 0.76,
+      "probabilities": {
+        "changes_within_intent": 0.15,
+        "changes_broader": 0.84,
+        "intent_broader": 0.01
+      }
+    },
+    "intent_verifiable": {
+      "type": "noul",
+      "noul": 0.8
+    },
+    "needs_update_0": {
+      "type": "noul",
+      "noul": 0.85
+    },
+    "needs_update_1": {
+      "type": "noul",
+      "noul": 0.33
+    },
+    "needs_update_2": {
+      "type": "noul",
+      "noul": 0.34
+    }
+  },
+  "usage": {
+    "input_tokens": 1915,
+    "output_tokens": 243
+  }
+}

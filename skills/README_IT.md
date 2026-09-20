@@ -100,6 +100,25 @@ produzione così veloce che il volume di PR cresce oltre ogni lettura riga per
 riga, la mappa è ciò che tiene viva la review: prima vedi dove siede il
 rischio, poi zoomi solo dove conta.
 
+### pr-assessment
+
+Il fratello veloce di pr-walkthrough: una pre-review calibrata di una PR in
+minuti e centesimi. Una scansione leggera comprime la modifica in uno state
+strutturato, poi una singola chiamata batchata a JEV — un System One model
+che risponde a domande tipizzate con probabilità calibrate invece di
+generare testo — lo giudica: rischio per dimensione, flag di drift per
+documento, controlli atomici sull'intento, priorità di review per
+cambiamento. Dove il semaforo dello scanner e le probabilità concordano,
+puoi procedere; dove divergono, la skill alza un doubt e lo triagi tu.
+
+**Cosa ci guadagni:** la risposta alla prima domanda di un reviewer — dove
+devo guardare? — prima di impegnarti in un walkthrough completo. Le
+divergenze emergono come doubt espliciti (un verde con probabilità di rischio
+alta merita un secondo sguardo; un rosso che il modello non vede merita
+verifica), i doc stantii vengono nominati uno per uno, e i cambiamenti
+arrivano ordinati per quanto da vicino un umano debba esaminarli. Il
+modello non produce mai finding né verdetti; ogni giudizio resta tuo.
+
 ## Navigare il codice
 
 ### navigating-java

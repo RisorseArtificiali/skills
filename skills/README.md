@@ -98,6 +98,25 @@ that PR volume grows beyond any line-by-line reading, the map is what
 keeps review possible: see where the risk sits first, then zoom only
 where it matters.
 
+### pr-assessment
+
+The fast sibling of pr-walkthrough: a calibrated pre-review of a PR in
+minutes and cents. A light scan compresses the change into a structured
+state, then one batched call to JEV — a System One model that answers typed
+questions with calibrated probabilities instead of generating text — judges
+it: per-dimension risk, per-doc drift flags, atomic intent checks, per-change
+review priority. Where the scanner's traffic light and the probabilities
+agree, you can move on; where they diverge, the skill raises a doubt and you
+triage it.
+
+**What you get:** the answer to a reviewer's first question — where should I
+look? — before committing to a full walkthrough. Divergences surface as
+explicit doubts (a green with a high risk probability is worth a second
+look; a red the model can't see is worth verifying), stale docs are flagged
+by name, and changes come ranked by how closely a human should examine
+them. The model never produces findings or verdicts; every judgment stays
+yours.
+
 ## Navigate the code
 
 ### navigating-java

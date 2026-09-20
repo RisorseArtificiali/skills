@@ -1,9 +1,11 @@
 # JEV Shared Judgment Layer — Design
 
 **Date:** 2026-09-20
-**Status:** Approved design (all six sections) — pending implementation plan
+**Status:** Implemented (revision 2: delivered as the standalone `pr-assessment` skill
+instead of modifying pr-walkthrough — user decision at implementation time;
+pr-walkthrough remains untouched and may consume the layer later)
 **Branch:** `docs/jev-integration-design`
-**First client:** `skills/pr-walkthrough`
+**First client:** `skills/pr-assessment`
 
 ## Context
 
@@ -67,8 +69,8 @@ enrichment (tests 0.76→0.75, architecture 0.67→0.69, priority R5 1.84→1.77
 
 | Decision | Choice | Rationale |
 |---|---|---|
-| Delivery shape | **Shared layer now** (`scripts/jev/`), pr-walkthrough first client | Other skills (plan-walkthrough, issue-triage) consume it without refactoring |
-| Interaction model | **Divergence + gating** | Scanner status × Jev probability: divergence → automatic doubt; convergence-on-green may archive a section — with safeguards (below) |
+| Delivery shape | **Shared layer now** (`scripts/jev/`), consumed by a **new standalone skill `pr-assessment`** | A self-contained fast pre-review skill; pr-walkthrough untouched (may consume the layer later); other skills add their own battery when a ground-truth validation exists |
+| Interaction model | **Divergence-driven doubts + low-attention marks** | Scanner status × Jev probability: divergence → doubt the human triages; convergence-on-green (with safeguards) → low-attention mark in the report. Standalone skill has no walkthrough to gate — gating survives as the report's low-attention marks with identical thresholds and prohibitions |
 | Human role | Unchanged: every judgment is the human's; Jev never produces findings or verdicts | Same stance as jev-review ("review prompts, not proof") |
 
 ## Architecture
@@ -77,13 +79,15 @@ enrichment (tests 0.76→0.75, architecture 0.67→0.69, priority R5 1.84→1.77
 scripts/jev/
   jev_call.py                 # neutral runner (stdlib only): state + battery → API → report
   batteries/
-    pr-walkthrough.json       # validated battery; questions as human-editable constants
+    pr-assessment.json        # validated battery; questions as human-editable constants
   README.md                   # state contract, how to add a battery, key handling
-skills/pr-walkthrough/
+skills/pr-assessment/
+  SKILL.md                    # the standalone skill (scan → JEV pass → report → doubt triage)
   jev/                        # synced copy of scripts/jev/ (install artifact, travels with skill)
-  SKILL.md                    # new "Step 1.5 — JEV pass"
-scripts/tests/
-  test_jev_sync.py            # diff-guard: skill copies cannot drift from the source
+scripts/
+  test_jev_call.py            # runner + policy tests (mocked HTTP, golden spike fixtures)
+  test_jev_sync.py            # diff-guard: skill copies cannot drift (--fix re-syncs)
+scripts/fixtures/jev/         # golden API responses from the field spike
 ```
 
 Source of truth is `scripts/jev/`. The per-skill copy exists because installers link whole
@@ -111,14 +115,14 @@ Scan subagents add one structured JSON block to their compact notes (prose uncha
 The orchestrator merges the three scanners' blocks into
 `.reviews/prs/<target>.jev-state.json` (conflicts: keep the worst status, union inventories).
 
-## Battery v1 (`pr-walkthrough.json`) — validated modules only
+## Battery v1 (`pr-assessment.json`) — validated modules only
 
 | Module | Form | Why |
 |---|---|---|
 | `needs_update_{i}` | Noul fan-out over `doc_inventory`, neutral phrasing | The spike's star: catches both drift shapes, yields per-doc pointers |
 | `intent_linked` / `intent_scope` / `intent_verifiable` | Noul / Choice / Noul | Atomic decomposition separated both intent cases perfectly |
 | `priority_{id}` | Score per logical change (3-level rubric) | Ranked the blocking finding top with the highest confidence |
-| `risk_{dimension}` | Noul ×7 | Secondary signal: feeds divergence detection and the gating conjunction — never sufficient alone (shape-brittle as a standalone) |
+| `risk_{dimension}` | Noul ×7 | Secondary signal: feeds divergence detection and the low-attention conjunction — never sufficient alone (shape-brittle as a standalone) |
 | `walkthrough_mode` | Choice | 0.98 match with the mode actually used; cheap second opinion on the skill's own heuristic |
 
 The runner expands fan-out placeholders (`{i}` over `doc_inventory`, `{id}` over
@@ -130,44 +134,48 @@ the skill.
 - **Divergence → doubt.** `risk_{dimension}` ≥ 0.6 against scanner-green, or ≤ 0.35 against
   scanner-red/yellow → the section opens with an explicit doubt the human triages. Jev never
   emits findings directly.
-- **Gating (safeguarded).** A section may be archived without walkthrough **only if**:
-  scanner-green **and** `risk` noul ≤ 0.30 **and** no `needs_update` ≥ 0.5 anywhere in the
-  report (conservative global conjunct — no per-section relevance computation).
-  Additional prohibitions: never gate **Intent**; never gate sections with scanner DOUBTS;
-  never green-by-Jev-alone (honesty rule intact). Gated sections stay visible in the dossier
-  as a numbered line with the evidence ("🟢∅ archived: scanner green, JEV 0.18") and are
-  un-gateable at any time from the navigation menu.
-- **Ordering.** Red/yellow sections run in `priority`-desc order; confidence is displayed
-  next to the score.
+- **Low attention (the standalone form of gating).** A dimension is marked low-attention
+  in the report **only if**: scanner-green **and** `risk` noul ≤ 0.30 **and** no
+  `needs_update` ≥ 0.5 anywhere in the report (conservative global conjunct — no
+  per-dimension relevance computation). Additional prohibitions: never mark **intent**
+  low-attention; never green-by-Jev-alone (honesty rule intact). Marks carry their numbers
+  ("scanner green + JEV 0.18") so a wrong low can be challenged.
+- **Ordering.** Doubts and changes are presented in `priority`-desc order; confidence is
+  displayed next to the score.
 
 ## Fallback, privacy, cost
 
 - No `TYPESAFE_API_KEY` (env var, or a git-ignored file like `temp/.typesafe-key`) or network
-  failure → JEV pass is skipped, one line in the dossier header ("JEV pass: skipped (no
-  key)"), gating unavailable, skill otherwise identical to today.
+  failure → the skill offers via closed question: proceed scan-only (report marked "JEV
+  pass: skipped") or stop. Never blocks on the key.
 - **Privacy:** v1 state carries compact notes and file names, never raw diff hunks —
   minimal third-party surface; declared in `scripts/jev/README.md`.
 - **Cost:** ~$0.0002 per review (one batched call), < 1 s.
 
-## SKILL.md changes (`pr-walkthrough`)
+## The `pr-assessment` skill
 
-1. New **Step 1.5 — JEV pass**: assemble state → run `jev/jev_call.py` with the synced
-   battery → apply policy → dossier gains a JEV column next to the traffic light, a gated
-   list, and divergence doubts surfaced in the relevant walkthrough sections.
-2. Scanner subagent prompt gains the structured-block requirement (`doc_inventory`,
-   `repo_facts`).
-3. Red Flags gains: "a section was gated that the scanner did not actually examine" and
-   "gating applied despite scanner doubts".
-4. Interaction-with-other-skills notes that plan-walkthrough / issue-triage may add
-   batteries later.
+Standalone skill (`skills/pr-assessment/SKILL.md`), the light sibling of pr-walkthrough:
+
+1. **Step 0** target (PR number or branch, `gh`/`git` facts) + home in
+   `.reviews/assessments/` (git-excluded like the other dossier homes).
+2. **Step 1** one scan subagent (inline with disclosure for <10-file PRs) producing the
+   structured state contract; scan honesty rule inherited (unexamined = doubt, never green).
+3. **Step 2** the JEV pass via the runner; key resolution env → `--key-file`; graceful
+   no-key degradation.
+4. **Step 3** report (dimension table scanner × JEV with diverging cells marked, doubts,
+   doc flags, intent flags, priorities, low-attention, suggested walkthrough mode) then
+   closed-question doubt triage: real problem / accepted / false alarm / needs walkthrough.
+5. Red flags include: JEV numbers presented as verdicts, raw hunks in state, doubts hidden
+   because "JEV said low", anything posted to the PR.
 
 ## Testing
 
 - Runner: mocked HTTP (stdlib `unittest.mock`); policy rules: unit tests on synthetic
-  answer sets (divergence mapping, gating prohibitions, ordering).
-- Battery: pure data; golden fixtures extracted from `temp/jev-spike-*.json` for response
-  format regression.
-- No live API in tests. `test_jev_sync.py` runs alongside `test_codex_install.py`.
+  answer sets (divergence mapping, low-attention prohibitions and veto, ordering).
+- Battery: pure data; golden fixtures from the field spike (`scripts/fixtures/jev/`) for
+  response-format regression.
+- No live API in tests. `test_jev_sync.py` runs alongside `test_codex_install.py`;
+  `python3 scripts/test_jev_sync.py --fix` re-syncs skill copies.
 
 ## Out of scope (YAGNI)
 
